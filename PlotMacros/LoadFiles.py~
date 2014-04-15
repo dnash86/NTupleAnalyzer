@@ -1,0 +1,6 @@
+
+
+def ComputeRatio(FileDirectory,TreeName,MCAddons):
+    #for f in os.popen('cmsLs '+FileDirectory+'| grep ".root" | gawk \'{print $NF}\' | gawk -F "/" \'{print $NF}\'').readlines():
+    for f in os.popen('cmsLs '+FileDirectory+'| grep ".root" | gawk \'{print $NF}\' | grep -v LQTo |gawk -F "/" \'{print $NF}\'').readlines():
+        exec('tree_'+f.replace(".root\n","")+" = TFile.Open(\"root://eoscms//eos/cms/"+FileDirectory+"/"+f.replace("\n","")+"\")"+".Get(\""+TreeName+"\")")
