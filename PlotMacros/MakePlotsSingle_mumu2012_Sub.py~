@@ -43,12 +43,20 @@ for n in range(len(a)):
         InputCuts=True
         ifile=a[n+1]
         print "Will use the input cut card for selection"
+    if a[n]=='-p' or a[n]=='--plot':
+        PlotHistos=True
+    if a[n]=='-i' or a[n]=='--integrate':
+        IntegrateOnly=True
+    else:
+        IntegrateOnly=False
+    if a[n]=='-f' or a[n]=='--final_selection_cutcard':
+        fselfile=a[n+1]
 if not InputCuts:
     print "No input cut card, will use standard selection"
 
 ###############################################
 
-def DrawHisto(lq_choice, selection, emuselection, qcdselection, use_emu, drawSub, binning, variable, variable_emu, variable_qcd, xlabel,zscale,ttscaler,tag):
+def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, use_emu, drawSub, binning, variable, variable_emu, variable_qcd, xlabel,zscale,ttscaler,tag):
     SetStyle()
     Luminosity = "19600"
     # Set canvases
@@ -303,9 +311,9 @@ def GetSelections(ifile):
                 Selections[2] += '('+row[0]+row[1]+row[2]+')'
     return Selections
 
-def main():
-    #LoadTrees()
-    #exit()
+
+def plot():
+    JustIntegrate=False
     drawSub = True
     use_emu = True
     ttscaler = (3568.49/5392.52)
@@ -340,10 +348,16 @@ def main():
 
     lq_choice = "*(LQmass==500)*(LQcoupling==1.0)*(LQisCMu==1)*(1/1000)"
 
-    ptbinning = [50,0,1000]
-    etabinning = [48,-2.4,2.4]
-    mbinning = [50,0,2000]
-    stbinning = [50,0,2000]
+    #ptbinning = [50,0,1000]
+    #etabinning = [48,-2.4,2.4]
+    #mbinning = [50,0,2000]
+    #stbinning = [50,0,2000]
+    #vertexbinning = [45,-0.5,44.5]
+
+    ptbinning = [25,0,1000]
+    etabinning = [24,-2.4,2.4]
+    mbinning = [25,0,2000]
+    stbinning = [25,0,2000]
     vertexbinning = [45,-0.5,44.5]
 
     filetag = "Preselection"
@@ -351,23 +365,29 @@ def main():
 
     print "About to start drawing the Histos..."
 
-    DrawHisto(lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, ptbinning, "Pt_muon1", "max(Pt_HEEPele1,Pt_muon1)","", "p_{T} (#mu_{1}) (GeV) " +xtag,znorm, ttscaler,filetag)
-    DrawHisto(lq_choice, Selection, Selection_emu, Selection_qcd,use_emu , drawSub, ptbinning,  "Pt_muon2", "min(Pt_HEEPele1,Pt_muon1)", "","p_{T} (#mu_{2}) (GeV) " +xtag,znorm, ttscaler,filetag)
-    DrawHisto(lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, ptbinning, "Pt_pfjet1","Pt_pfjet1", "", "p_{T} (jet_{1}) (GeV) " +xtag,znorm, ttscaler,filetag)
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, ptbinning, "Pt_muon1", "max(Pt_HEEPele1,Pt_muon1)","", "p_{T} (#mu_{1}) (GeV) " +xtag,znorm, ttscaler,filetag)
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd,use_emu , drawSub, ptbinning,  "Pt_muon2", "min(Pt_HEEPele1,Pt_muon1)", "","p_{T} (#mu_{2}) (GeV) " +xtag,znorm, ttscaler,filetag)
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, ptbinning, "Pt_pfjet1","Pt_pfjet1", "", "p_{T} (jet_{1}) (GeV) " +xtag,znorm, ttscaler,filetag)
 
-    DrawHisto(lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, etabinning, "Eta_muon2", "Eta_muon1*(Pt_muon1<Pt_HEEPele1)+Eta_HEEPele1*(Pt_HEEPele1<Pt_muon1)","", "#eta (#mu_{2}) " +xtag,  znorm, ttscaler,filetag)
-    DrawHisto(lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, etabinning, "Eta_muon1", "Eta_muon1*(Pt_muon1>Pt_HEEPele1)+Eta_HEEPele1*(Pt_HEEPele1>Pt_muon1)","", "#eta (#mu_{1}) " +xtag, znorm, ttscaler,filetag)
-    DrawHisto(lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, etabinning, "Eta_pfjet1", "Eta_pfjet1", "Eta_pfjet1","#eta (jet_{1}) " +xtag, znorm, ttscaler,filetag)
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, etabinning, "Eta_muon2", "Eta_muon1*(Pt_muon1<Pt_HEEPele1)+Eta_HEEPele1*(Pt_HEEPele1<Pt_muon1)","", "#eta (#mu_{2}) " +xtag,  znorm, ttscaler,filetag)
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, etabinning, "Eta_muon1", "Eta_muon1*(Pt_muon1>Pt_HEEPele1)+Eta_HEEPele1*(Pt_HEEPele1>Pt_muon1)","", "#eta (#mu_{1}) " +xtag, znorm, ttscaler,filetag)
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, etabinning, "Eta_pfjet1", "Eta_pfjet1", "Eta_pfjet1","#eta (jet_{1}) " +xtag, znorm, ttscaler,filetag)
 
-    DrawHisto(lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, stbinning, "ST_pf_mumu_single", "ST_pf_emu_single","", "S_{T} (GeV)" +xtag, znorm, ttscaler,filetag)
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, stbinning, "ST_pf_mumu_single", "ST_pf_emu_single","", "S_{T} (GeV)" +xtag, znorm, ttscaler,filetag)
 
 
     
-    DrawHisto(lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, mbinning, "M_muon1muon2", "M_muon1HEEPele1", "", "M_{#mu#mu}(GeV)  " +xtag  ,znorm, ttscaler,filetag)
-    DrawHisto(lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, mbinning, "M_singleLQ_epfjet_Masshigh", "M_singleLQ_emusel_Masshigh","", "M_{e jet} " +xtag, znorm, ttscaler,filetag)
-    DrawHisto(lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, mbinning, "M_muon1pfjet1", "M_HEEPele1pfjet1", "","M_{#mu jet} " +xtag,znorm, ttscaler,filetag)
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, mbinning, "M_muon1muon2", "M_muon1HEEPele1", "", "M_{#mu#mu}(GeV)  " +xtag  ,znorm, ttscaler,filetag)
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, mbinning, "M_singleLQ_mupfjet_Masshigh", "M_singleLQ_emusel_Masshigh","", "M_{e jet} " +xtag, znorm, ttscaler,filetag)
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, mbinning, "M_muon1pfjet1", "M_HEEPele1pfjet1", "","M_{#mu jet} " +xtag,znorm, ttscaler,filetag)
 
-    DrawHisto(lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, vertexbinning, "N_Vertices", "N_Vertices", "", "N_{Vertices}" +xtag, znorm, ttscaler,filetag)	
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, vertexbinning, "N_Vertices", "N_Vertices", "", "N_{Vertices}" +xtag, znorm, ttscaler,filetag)	
 
+
+def main():
+    if PlotHistos:
+        plot()
+    if IntegrateOnly:
+        integrate()
 
 main()

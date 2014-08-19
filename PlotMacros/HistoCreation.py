@@ -26,6 +26,28 @@ def MakeHisto(name,legendname,tree,variable,binning,selection,style,label):
     histo.GetYaxis().SetLabelFont(132)
     return histo
 
+def IntegralAndError(trees,weights,selections):
+    h=TH1D('h','h',1,-1,3)
+    htotal=TH1D('htotal','htotal',1,-1,3)
+    h.Sumw2()
+    htotal.Sumw2()
+    for i in range(len(trees)):
+        trees[i].Project('h','1.0',selections[i])
+        htotal.Add(h,weights[i])
+    I = htotal.GetBinContent(1)
+    E = htotal.GetBinError(1)
+
+
+    print "I = " +str(I)
+    #print "E = " +str(E)
+    #print "htotal.Integral() = " +str(htotal.Integral())
+    #print "h.Integral() = " +str(h.Integral())
+    #print "htotal.GetEntries() = " +str(htotal.GetEntries())
+    #print "h.GetEntries() = " +str(h.GetEntries())
+    
+    return [I,E]
+
+
 
 def BeautifyStack(stack,label):
     stack.GetHistogram().GetXaxis().SetTitleFont(132)
@@ -36,3 +58,5 @@ def BeautifyStack(stack,label):
     stack.GetHistogram().GetYaxis().SetTitle(label[1])
     
     return stack
+
+

@@ -14,12 +14,19 @@ from WeightsAndFilters import *
 #################################
 #   Loading trees...
 
-Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_TTBarReRun_2014_03_05_13_19_56/SummaryFiles'
 
-Files_ee = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_ReRunOldNTuples_2014_02_25_21_20_15/SummaryFiles'
-
+#Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_TTBarReRun_2014_03_05_13_19_56/SummaryFiles'
+Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_EMu_ReRun_2014_04_30_22_04_51/SummaryFiles'
+#Files_ee = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_ReRunOldNTuples_2014_02_25_21_20_15/SummaryFiles'
+#Files_ee = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_ReRun_OrderFixed_2014_05_06_15_52_31/SummaryFiles'
 Files_qcd = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ForQCDStudy_QCDReRunEdmundCS_NoPtJetElimination_2014_02_07_21_29_51/SummaryFiles'
 
+##  Less skimmed samples
+Files_ee='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_ElectronSmallerSkim_2014_06_10_01_46_29/SummaryFiles/'
+
+
+
+#Files_qcd = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ForQCDStudy_QCDVeryStrict_2014_04_13_21_31_02/SummaryFiles'
 TreeName = 'PhysicalVariables'
 
 print "Loading..."
@@ -28,11 +35,11 @@ for f in os.popen('cmsLs '+Files_ee+'| grep ".root" | gawk \'{print $NF}\' | gaw
     #print f.replace('-','_').replace(".root\n","")+" = TFile.Open(\"root://eoscms//eos/cms/"+Files_ee+"/"+f.replace("\n","")+"\")"+".Get(\""+TreeName+"\")"
     print f.replace('-','_').replace(".root\n","")
     
-for f in os.popen('cmsLs '+Files_emu+'| grep ".root" | gawk \'{print $NF}\' | gawk -F "/" \'{print $NF}\'').readlines():
+for f in os.popen('cmsLs '+Files_emu+'| grep ".root" | grep -v LQTo | gawk \'{print $NF}\' | gawk -F "/" \'{print $NF}\'').readlines():
     exec('emu_'+f.replace('-','_').replace(".root\n","")+" = TFile.Open(\"root://eoscms//eos/cms/"+Files_emu+"/"+f.replace("\n","")+"\")"+".Get(\""+TreeName+"\")")
-    #print 'emu_'+f.replace('-','_').replace(".root\n","")
+    print 'emu_'+f.replace('-','_').replace(".root\n","")
 
-for f in os.popen('cmsLs '+Files_qcd+'| grep ".root" | gawk \'{print $NF}\' | gawk -F "/" \'{print $NF}\'').readlines():
+for f in os.popen('cmsLs '+Files_qcd+'| grep ".root" | grep -v LQTo | gawk \'{print $NF}\' | gawk -F "/" \'{print $NF}\'').readlines():
     exec('qcd_'+f.replace(".root\n","")+" = TFile.Open(\"root://eoscms//eos/cms/"+Files_qcd+"/"+f.replace("\n","")+"\")"+".Get(\""+TreeName+"\")")
     #print 'qcd_'+f.replace('-','_').replace(".root\n","")
 print "...done loading"
@@ -42,6 +49,10 @@ print "...done loading"
 
 a=sys.argv
 InputCuts=False
+UseOutputDir=False
+PlotHistos=False
+Test=False
+IntegrateOnly=False
 for n in range(len(a)):
     if a[n]=='-i' or a[n]=='--input_cutcard':
         InputCuts=True
@@ -49,20 +60,75 @@ for n in range(len(a)):
         print "Will use the input cut card for selection"
     if a[n]=='-p' or a[n]=='--plot':
         PlotHistos=True
-    if a[n]=='-i' or a[n]=='--integrate':
+    if a[n]=='-I' or a[n]=='--integrate':
         IntegrateOnly=True
     if a[n]=='-f' or a[n]=='--final_selection_cutcard':
         fselfile=a[n+1]
+    if a[n]=='-o' or a[n]=='--output_dir':
+        OutputDir=a[n+1]
+        UseOutputDir=True
+    if a[n]=='-t' or a[n]=='--test':
+        Test=True
 if not InputCuts:
     print "No input cut card, will use standard selection"
 
 ###############################################
 
+def test():
+    if InputCuts:
+        Selections = GetSelections(ifile)
+        Selection = Selections[0]
+        Selection_emu = Selections[1]
+        Selection_qcd = Selections[2]
+    else:
+        Selection = '((Pt_HEEPele1>45)*(Pt_HEEPele2>45)*(Pt_pfjet1>45)*(deltaR_HEEPele1ele2>0.3)*((abs(Eta_HEEPele1)<2.5)*(abs(Eta_HEEPele2)<2.5))*(M_HEEPele1ele2>110))*(ST_pf_ee_single> 250)'
+
+        Selection_emu = '((Pt_muon1>45)*(Pt_HEEPele1>45)*(Pt_pfjet1>45)*(deltaR_muon1HEEPele1>0.3)*((abs(Eta_muon1)<2.5)*(abs(Eta_HEEPele1)<2.5))*(M_muon1HEEPele1>110))*(ST_pf_emu_single> 250)'
+
+        Selection_qcd = '((Pt_QCDele1>45)*(Pt_QCDele2>45)*(Pt_pfjet1>45)*(deltaR_QCDele1ele2>0.3)*((abs(Eta_QCDele1)<2.5)*(abs(Eta_QCDele2)<2.5))*(M_QCDele1ele2>110))*((Pt_QCDele1+Pt_QCDele2+Pt_pfjet1)>250)'
+
+    ftmp = TFile.Open("garbage.root","RECREATE")
+    print "On DoublePhotonData:"
+    PrintTestInfo(DoublePhotonData,Selection)
+    print "On Diboson:"
+    PrintTestInfo(DiBoson,Selection)
+    print "On Gjets:"
+    PrintTestInfo(Gjets,Selection)
+
+    print "On SingleTop:"
+    PrintTestInfo(SingleTop,Selection)
+    print "On TTBarMC:"
+    PrintTestInfo(TTBarDBin,Selection)
+    print "On WJets:"
+    PrintTestInfo(WJetsJBin,Selection)
+    print "On ZJets:"
+    PrintTestInfo(ZJetsJBin,Selection)
+
+    print "On Signal:"
+    PrintTestInfo(LQToUE_Single_L_0p2,Selection)
+    PrintTestInfo(LQToUE_Single_L_0p4,Selection)
+    PrintTestInfo(LQToUE_Single_L_0p6,Selection)
+    PrintTestInfo(LQToUE_Single_L_0p8,Selection)
+    PrintTestInfo(LQToUE_Single_L_1p0,Selection)
+
+def PrintTestInfo(tree,Selection):
+    TestData = tree.CopyTree(Selection)
+    for n in range(TestData.GetEntries()):
+        TestData.GetEntry(n)
+        if TestData.Pt_HEEPele1 < TestData.Pt_HEEPele2:
+            #print "Found a flip in "+str(tree)
+            if (TestData.Pt_HEEPele2-TestData.Pt_HEEPele1)>5.0:
+                print "-----------> Its Big: "
+            print str(TestData.Pt_HEEPele1)+", "+str(TestData.Pt_HEEPele2)  
+    
+    
 def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, use_emu, drawSub, binning, variable, variable_emu, variable_qcd, xlabel,zscale,ttscaler,tag):
     SetStyle()
     channel = "ee"
     Luminosity = "19600"
     # Set canvases
+
+    print selection
     if drawSub:
         c1 = TCanvas("c1","",800,800)
         pad1 = TPad("pad1","The pad 60% of the height",0.0,0.4,1.0,1.0,0)
@@ -208,13 +274,13 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
     h_Signal.SetLineStyle(3)
     h_Signal.Draw("HISTSAME")
     #h_Signal.Draw("HISTSAME")
-    #h_Data.Draw("HISTEPSAME")
+    h_Data.Draw("HISTEPSAME")
 
     leg=TLegend(0.6,0.63,0.91,0.91,"","brNDC")
     leg.SetTextFont(132)
     leg.SetFillColor(0)
     leg.SetBorderSize(0)
-    #leg.AddEntry(h_Data,"Data 2012, "+Luminosity+" pb^{-1}")
+    leg.AddEntry(h_Data,"Data 2012, "+Luminosity+" pb^{-1}")
     leg.AddEntry(h_ZJets,"Z/#gamma* + jets")
     leg.AddEntry(h_QCD,"QCD multijets")
 
@@ -228,8 +294,8 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
     leg.AddEntry(h_WJets,"Other backgrounds")
     leg.Draw("SAME")
 
-    #h_Data.SetMinimum(.1)
-    #h_Data.SetMaximum(1.2*(h_Data.GetMaximum()))
+    h_Data.SetMinimum(.1)
+    h_Data.SetMaximum(1.2*(h_Data.GetMaximum()))
 
     txt = TLatex((binning[2]-binning[1])*.02+binning[1],.3*5.0*h_Data.GetMaximum(), "Work in Progress")
     txt.SetTextFont(132)
@@ -327,7 +393,10 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
         h_compr.Draw("ep")
         line0.Draw("SAME")
         print "Made the chi2 plots"
-	c1.Print("PlotsSingleSub_ee2012/"+variable+"_"+tag+".png");
+	if UseOutputDir:
+            c1.Print(OutputDir+"/"+variable+"_"+tag+".png");
+        else:
+            c1.Print("PlotsSingleSub_ee2012/"+variable+"_"+tag+".png");
 
 def GetSelections(ifile):
     import csv
@@ -369,9 +438,9 @@ def GetSelections(ifile):
 def plot():
     JustIntegrate=False
     drawSub = True
-    use_emu = True
+    use_emu = False
     ttscaler = 0.5942599
-    znorm = 0.9629
+    znorm = 1.00001  #0.9629
 
 
     if InputCuts:
@@ -416,25 +485,49 @@ def plot():
     xtag = " ["+filetag+"]"
 
     print "About to start drawing the Histos..."
+
+    if False:
+        filetag = "Fullselection"
+        xtag = " ["+filetag+"]"
+        
+        Selection += "*(ST_pf_ee_single > 500)*(max(M_HEEPele1pfjet1,M_HEEPele2pfjet1) > 500)"
+        Selection_emu +="*(ST_pf_emu_single > 500)*(max(M_HEEPele1pfjet1,M_muon1pfjet1) > 500)"
+        Selection_qcd += "*(Pt_QCDele1+Pt_QCDele2+Pt_pfjet1 > 500)*(max(M_QCDele1pfjet1,M_QCDele2pfjet1) > 500)"
+
+        DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, mbinning, "M_singleLQ_epfjet_Masshigh", "M_singleLQ_emusel_Masshigh","max(M_QCDele1pfjet1,M_QCDele2pfjet1)", "M_{e jet} " +xtag, znorm, ttscaler,filetag)
+
+        DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, stbinning, "ST_pf_ee_single", "ST_pf_emu_single","(Pt_QCDele1+Pt_QCDele2+Pt_pfjet1)", "S_{T} (GeV)" +xtag, znorm, ttscaler,filetag)
+
+        return
+
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, mbinning, "M_singleLQ_epfjet_Masshigh", "M_singleLQ_emusel_Masshigh","max(M_QCDele1pfjet1,M_QCDele2pfjet1)", "M_{e jet} " +xtag, znorm, ttscaler,filetag)
 
-    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, ptbinning, "Pt_HEEPele1", "max(Pt_HEEPele1,Pt_muon1)","Pt_QCDele1", "p_{T} (e_{1}) (GeV) " +xtag,znorm, ttscaler,filetag)
-    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd,use_emu , drawSub, ptbinning,  "Pt_HEEPele2", "min(Pt_HEEPele1,Pt_muon1)", "Pt_QCDele2","p_{T} (e_{2}) (GeV) " +xtag,znorm, ttscaler,filetag)
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, stbinning, "ST_pf_ee_single", "ST_pf_emu_single","(Pt_QCDele1+Pt_QCDele2+Pt_pfjet1)", "S_{T} (GeV)" +xtag, znorm, ttscaler,filetag)
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, vertexbinning, "N_Vertices", "N_Vertices", "N_Vertices", "N_{Vertices}" +xtag, znorm, ttscaler,filetag)
+
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, mbinning, "M_singleLQ_epfjet_Masshigh", "M_singleLQ_emusel_Masshigh","max(M_QCDele1pfjet1,M_QCDele2pfjet1)", "M_{e jet} " +xtag, znorm, ttscaler,filetag)
+
+    #DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, ptbinning, "Pt_HEEPele1", "max(Pt_HEEPele1,Pt_muon1)","Pt_QCDele1", "p_{T} (e_{1}) (GeV) " +xtag,znorm, ttscaler,filetag)
+    #DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd,use_emu , drawSub, ptbinning,  "Pt_HEEPele2", "min(Pt_HEEPele1,Pt_muon1)", "Pt_QCDele2","p_{T} (e_{2}) (GeV) " +xtag,znorm, ttscaler,filetag)
+
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, ptbinning, "max(Pt_HEEPele1,Pt_HEEPele2)", "max(Pt_HEEPele1,Pt_muon1)","max(Pt_QCDele1,Pt_QCDele2)", "p_{T} (e_{1}) (GeV) " +xtag,znorm, ttscaler,filetag)
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd,use_emu , drawSub, ptbinning,  "min(Pt_HEEPele1,Pt_HEEPele2)", "min(Pt_HEEPele1,Pt_muon1)", "min(Pt_QCDele1,Pt_QCDele2)","p_{T} (e_{2}) (GeV) " +xtag,znorm, ttscaler,filetag)
+
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, ptbinning, "Pt_pfjet1","Pt_pfjet1", "Pt_pfjet1", "p_{T} (jet_{1}) (GeV) " +xtag,znorm, ttscaler,filetag)
 
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, etabinning, "Eta_HEEPele2", "Eta_muon1*(Pt_muon1<Pt_HEEPele1)+Eta_HEEPele1*(Pt_HEEPele1<Pt_muon1)","Eta_QCDele2", "#eta (e_{2}) " +xtag,  znorm, ttscaler,filetag)
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, etabinning, "Eta_HEEPele1", "Eta_muon1*(Pt_muon1>Pt_HEEPele1)+Eta_HEEPele1*(Pt_HEEPele1>Pt_muon1)","Eta_QCDele1", "#eta (e_{1}) " +xtag, znorm, ttscaler,filetag)
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, etabinning, "Eta_pfjet1", "Eta_pfjet1", "Eta_pfjet1","#eta (jet_{1}) " +xtag, znorm, ttscaler,filetag)
 
-    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, stbinning, "ST_pf_ee_single", "ST_pf_emu_single","(Pt_QCDele1+Pt_QCDele2+Pt_pfjet1)", "S_{T} (GeV)" +xtag, znorm, ttscaler,filetag)
+
 
 
     
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, mbinning, "M_HEEPele1ele2", "M_muon1HEEPele1", "M_QCDele1ele2", "M_{ee}(GeV)  " +xtag  ,znorm, ttscaler,filetag)
 
-    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, mbinning, "M_HEEPele1pfjet1", "M_HEEPele1pfjet1", "M_QCDele1pfjet1","M_HEEPele1pfjet1","M_{e jet} " +xtag,znorm, ttscaler,filetag)
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, mbinning, "M_HEEPele1pfjet1", "M_HEEPele1pfjet1", "M_QCDele1pfjet1","M_{e jet} " +xtag,znorm, ttscaler,filetag)
 
-    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, vertexbinning, "N_Vertices", "N_Vertices", "N_Vertices", "N_{Vertices}" +xtag, znorm, ttscaler,filetag)	
+    	
 
 
 def main():
@@ -442,5 +535,7 @@ def main():
         plot()
     if IntegrateOnly:
         integrate()
+    if Test:
+        test()
 
 main()
