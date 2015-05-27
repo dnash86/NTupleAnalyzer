@@ -1,0 +1,7 @@
+SignalType
+DY1JetsToLL_M-50_scaleup_8TeV-madgraph
+DY1JetsToLL_M-50_scaledown_8TeV-madgraph
+DY2JetsToLL_M-50_scaleup_8TeV-madgraph
+DY2JetsToLL_M-50_scaledown_8TeV-madgraph
+DY3JetsToLL_M-50_scaleup_8TeV-madgraph
+DY3JetsToLL_M-50_scaledown_8TeV-madgraph

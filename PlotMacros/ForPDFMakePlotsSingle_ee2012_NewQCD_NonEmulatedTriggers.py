@@ -18,8 +18,9 @@ from WeightsAndFilters import *
 #Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_TTBarReRun_2014_03_05_13_19_56/SummaryFiles'
 #Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_EMu_ReRun_2014_04_30_22_04_51/SummaryFiles'
 #Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_ForEMuFixedElectronEta_2014_07_01_16_02_33/SummaryFiles'
-Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_EMuLowerSkim_2014_07_20_21_49_58/SummaryFiles'
-
+#Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_EMuLowerSkim_2014_07_20_21_49_58/SummaryFiles'
+#Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_EMuLowerSkim_2014_07_20_21_49_58/SummaryFiles'
+Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_EMuLowerFixMuonKinematics_2014_07_30_14_17_53/SummaryFiles'
 #Files_ee = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_ReRunOldNTuples_2014_02_25_21_20_15/SummaryFiles'
 #Files_ee = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_ReRun_OrderFixed_2014_05_06_15_52_31/SummaryFiles'
 
@@ -30,9 +31,23 @@ Files_ee='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_201
 Files_qcd = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ForQCDStudy_QCDReRunEdmundCS_NoPtJetElimination_2014_02_07_21_29_51/SummaryFiles'
 #Files_qcd = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ForQCDStudy_QCDVeryStrict_2014_04_13_21_31_02/SummaryFiles'
 
-#OptimizationFile = '/afs/cern.ch/user/d/dnash/CMSSW_5_0_0/src/NTupleAnalyzer/Optimization/Ele_ValuesSSB.txt'
-OptimizationFile = '/afs/cern.ch/user/d/dnash/SingleLQAnalysis/CMSSW_5_0_0/src/NTupleAnalyzer/PlotMacros/Ele_SSB_log2.txt'
 
+
+#Files_CorrectedSignal = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_JustSignalTest_2014_09_21_17_20_04/SummaryFiles'
+
+#Files_CorrectedSignal='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_JustSignalTest_2014_09_22_16_42_16/SummaryFiles'
+
+#Files_CorrectedSignal='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_JustSignalTest_2014_09_22_21_08_35/SummaryFiles'
+
+#Files_CorrectedSignal='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_JustSignalTest_2014_09_23_15_24_21/SummaryFiles'
+#Files_CorrectedSignal='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_SignalDiEleMass_2014_10_27_13_44_10/SummaryFiles'
+
+
+Files_CorrectedSignal='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_FixedGenMassesStatusOne_2014_10_29_16_54_57/SummaryFiles'
+#OptimizationFile = '/afs/cern.ch/user/d/dnash/CMSSW_5_0_0/src/NTupleAnalyzer/Optimization/Ele_ValuesSSB.txt'
+#OptimizationFile = '/afs/cern.ch/user/d/dnash/SingleLQAnalysis/CMSSW_5_0_0/src/NTupleAnalyzer/PlotMacros/Ele_SSB_log2.txt'
+#OptimizationFile = '/afs/cern.ch/user/d/dnash/CMSSW_5_0_0/src/NTupleAnalyzer/PlotMacros/EleModifiedValues.txt'
+OptimizationFile='/afs/cern.ch/user/d/dnash/SingleLQAnalysis/CMSSW_5_0_0/src/NTupleAnalyzer/PlotMacros/EleOptimizationJust1p0.txt'
 
 TreeName = 'PhysicalVariables'
 
@@ -97,7 +112,8 @@ if not InputCuts:
 
 print "Loading..."
 print Files_ee
-FileLocation = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_PDF_PDFRunElectrons_2014_06_24_00_50_55/SummaryFiles'
+#FileLocation = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_PDF_PDFRunElectrons_2014_06_24_00_50_55/SummaryFiles'
+FileLocation = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_PDF_Electrons_PDFElectronsCorrected_2014_08_19_16_27_31/SummaryFiles'
 if FileLocation=='blank':
     for f in os.popen('cmsLs '+Files_ee+'| grep ".root" | gawk \'{print $NF}\' | gawk -F "/" \'{print $NF}\'').readlines():
         #print " = TFile.Open(\"root://eoscms//eos/cms/"+Files_ee+"/"+f.replace("\n","")
@@ -379,19 +395,19 @@ def GetIntegralsAndErrors(JustIntegrate,lq_choice, selection, emuselection, qcds
         TTBarValues=IntegralAndError([TTBarDBin],[1],[selection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters])
 
    
-    GJetsValues=IntegralAndError([Gjets],[1],[selection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters])
+    #GJetsValues=IntegralAndError([Gjets],[1],[selection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters])
 
     if (zscale != 1.00):
         if True:
-            qcdtrees=[DoublePhotonData,WJetsJBin,DiBoson,ZJetsJBin,SingleTop,Gjets,TTBarDBin]
+            qcdtrees=[DoublePhotonData,WJetsJBin,DiBoson,ZJetsJBin,SingleTop,TTBarDBin]
             qcdweights=[1,-1,-1,-1,-1,-1,-1]
-            qcdselections=[qcdselection+Filters+Trigger,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters]
+            qcdselections=[qcdselection+Filters+Trigger,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters]
 
             QCDValues=IntegralAndError(qcdtrees,qcdweights,qcdselections)
            
     if JustIntegrate:
-        ValuesString= str(DataValues[0])+","+str(TTBarValues[0]) + "," + str(ZJetsValues[0]) + "," + str(DiBosonValues[0]) + "," + str(SingleTopValues[0]) + "," + str(WJetsValues[0]) + "," + str(GJetsValues[0]) + ","+str(QCDValues[0]) + "," + str(SignalValues[0])
-        ErrorsString= str(DataValues[1])+","+str(TTBarValues[1]) + "," + str(ZJetsValues[1]) + "," + str(DiBosonValues[1]) + "," + str(SingleTopValues[1]) + "," + str(WJetsValues[1]) + "," + str(GJetsValues[1]) + ","+str(QCDValues[1]) + "," + str(SignalValues[1])
+        ValuesString= str(DataValues[0])+","+str(TTBarValues[0]) + "," + str(ZJetsValues[0]) + "," + str(DiBosonValues[0]) + "," + str(SingleTopValues[0]) + "," + str(WJetsValues[0])  + ","+str(QCDValues[0]) + "," + str(SignalValues[0])
+        ErrorsString= str(DataValues[1])+","+str(TTBarValues[1]) + "," + str(ZJetsValues[1]) + "," + str(DiBosonValues[1]) + "," + str(SingleTopValues[1]) + "," + str(WJetsValues[1])  + ","+str(QCDValues[1]) + "," + str(SignalValues[1])
 
         return [ValuesString,ErrorsString]
                    
@@ -433,10 +449,10 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
         pad1.Draw()
         
     pad1.cd()
-    pad1.SetLogy()
+    #pad1.SetLogy()
     
     # Set gStyle
-    gStyle.SetOptLogy()
+    #gStyle.SetOptLogy()
     gStyle.SetOptStat(0)
     
 
@@ -498,7 +514,7 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
     #print "Made the ttbar plots"
 
     #If the channel is ee, include G Jets background and the QCD fake rate sample
-    h_GJets=MakeHisto('h_GJets','#gamma+Jets',Gjets,variable,binning,selection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,GJetsStackStyle,Label)
+    #h_GJets=MakeHisto('h_GJets','#gamma+Jets',Gjets,variable,binning,selection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,GJetsStackStyle,Label)
     if (zscale != 1.00):
 
         #if (zscale != 1.00):
@@ -509,7 +525,7 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
             h_qcd_DiBoson=MakeHisto('h_qcd_DiBoson','DiBoson',DiBoson,variable,binning,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,DiBosonStackStyle,Label)
             h_qcd_ZJets=MakeHisto('h_qcd_ZJets','Z+Jets',ZJetsJBin,variable,binning,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,ZStackStyle,Label)
             h_qcd_SingleTop=MakeHisto('h_qcd_SingleTop','SingleTop',SingleTop,variable,binning,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,StopStackStyle,Label)
-            h_qcd_GJets=MakeHisto('h_qcd_Gjets','#gamma+Jets',Gjets,variable,binning,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,GJetsStackStyle,Label)
+            #h_qcd_GJets=MakeHisto('h_qcd_Gjets','#gamma+Jets',Gjets,variable,binning,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,GJetsStackStyle,Label)
             h_qcd_TTBar=MakeHisto('h_qcd_TTBar','t#bar{t}',TTBarDBin,variable,binning,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,TTStackStyle,Label)
 
             print "QCD Integral = " + str(h_QCD.Integral())
@@ -521,7 +537,7 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
             print "QCD Integral = " + str(h_QCD.Integral())
             h_QCD.Add(h_qcd_SingleTop,-1)
             print "QCD Integral = " + str(h_QCD.Integral())
-            h_QCD.Add(h_qcd_GJets,-1)
+            #h_QCD.Add(h_qcd_GJets,-1)
             print "QCD Integral = " + str(h_QCD.Integral())
             h_QCD.Add(h_qcd_TTBar,-1)
             print "QCD Integral = " + str(h_QCD.Integral())
@@ -537,7 +553,7 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
 
 
     if JustIntegrate:
-        return str(h_Data.Integral())+","+str(h_TTBar.Integral()) + "," + str(h_ZJets.Integral()) + "," + str(h_DiBoson.Integral()) + "," + str(h_SingleTop.Integral()) + "," + str(h_WJets.Integral()) + "," + str(h_GJets.Integral()) + ","+str(h_QCD.Integral()) + "," + str(h_Signal.Integral())
+        return str(h_Data.Integral())+","+str(h_TTBar.Integral()) + "," + str(h_ZJets.Integral()) + "," + str(h_DiBoson.Integral()) + "," + str(h_SingleTop.Integral()) + "," + str(h_WJets.Integral())  + ","+str(h_QCD.Integral()) + "," + str(h_Signal.Integral())
         
     #If the channel is mumu, no need to include G Jets and use the mu enriched QCD sample
     #if channel = "mumu":
@@ -548,12 +564,27 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
     h_WJets.SetTitle("Other Backgrounds")
     h_WJets.Add(h_DiBoson)
     h_WJets.Add(h_SingleTop)
-    h_WJets.Add(h_GJets)
-    if (zscale !=1.00):
+    #h_WJets.Add(h_GJets)
+
+
+    #if (zscale !=1.00):
+    if False:
         Backgrounds=[h_WJets,h_QCD,h_TTBar,h_ZJets]
     else:
         Backgrounds=[h_WJets,h_TTBar,h_ZJets]
     #Backgrounds=[h_WJets,h_TTBar,h_ZJets]
+
+    h_WJets.Add(h_TTBar)
+    h_WJets.Add(h_ZJets)
+
+    print "Background:"
+    for i in range(h_WJets.GetNbinsX()):
+        print h_WJets.GetBinContent(i)
+    print "Signal:"
+    for i in range(h_Signal.GetNbinsX()):
+        print h_Signal.GetBinContent(i)
+
+
 
     print "W_Jets = " + str(h_WJets.Integral())
     MCStack = THStack ("MCStack","")
@@ -615,10 +646,10 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
         histo.SetMaximum(MaxRescaler*h_Data.GetMaximum())
                                    
     MCStack.Draw("HIST")
-    c1.cd(1).SetLogy()
+    #c1.cd(1).SetLogy()
 
     MCStack.SetMinimum(.1)
-    MCStack.SetMaximum(MaxRescaler*h_Data.GetMaximum())                              
+    MCStack.SetMaximum(MaxRescaler*h_WJets.GetMaximum())                              
     MCStack=BeautifyStack(MCStack,Label)
     h_Signal.SetLineStyle(3)
     h_Signal.Draw("HISTSAME")
@@ -644,8 +675,8 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
     leg.AddEntry(h_WJets,"Other backgrounds")
     leg.Draw("SAME")
 
-    h_Data.SetMinimum(.1)
-    h_Data.SetMaximum(MaxRescaler*(h_Data.GetMaximum()))
+    #h_Data.SetMinimum(.1)
+    #h_Data.SetMaximum(MaxRescaler*(h_Data.GetMaximum()))
 
     txt = TLatex((binning[2]-binning[1])*.02+binning[1],.3*5.0*h_Data.GetMaximum(), "Work in Progress")
     txt.SetTextFont(132)
@@ -788,7 +819,7 @@ def GetSelections(ifile):
 def plot():
     JustIntegrate=False
     drawSub = True
-    use_emu = True
+    use_emu = False
     #ttscaler = 0.489171949638 #0.479080479194  #0.488708924407 #0.490929901239
     ttscaler =  0.435 #0.435481463283
     #znorm = 0.981327517888   #+/-0.00705124299541 
@@ -860,6 +891,8 @@ def plot():
     hcalisobinning=[100,0,5]
     jetcountbinning=[9,0,8]
 
+    pdfweightbinning=[50,0,2]
+
     chargebinning=[11,-5,5]
 
     filetag = "Preselection"
@@ -882,6 +915,9 @@ def plot():
 
 
 
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, pdfweightbinning, "WEIGHTS_MSTW[3]", "WEIGHTS_MSTW[3]", "WEIGHTS_MSTW[3]", "WEIGHTS_MSTW[3]" +xtag, znorm, ttscaler,filetag)
+
+    return
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, jetcountbinning, "PFJetCount", "PFJetCount", "PFJetCount", "PFJetCount" +xtag, znorm, ttscaler,filetag)
 
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, ptbinning, "Pt_pfjet1","Pt_pfjet1", "Pt_pfjet1", "p_{T} (jet_{1}) (GeV) " +xtag,znorm, ttscaler,filetag)

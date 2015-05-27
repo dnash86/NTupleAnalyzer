@@ -1,0 +1,169 @@
+import sys
+import os
+from ROOT import *
+
+
+
+Summer2012_S10 = [
+        2.344E-05,
+        2.344E-05,
+        2.344E-05,
+        2.344E-05,
+        4.687E-04,
+        4.687E-04,
+        7.032E-04,
+        9.414E-04,
+        1.234E-03,
+        1.603E-03,
+        2.464E-03,
+        3.250E-03,
+        5.021E-03,
+        6.644E-03,
+        8.502E-03,
+        1.121E-02,
+        1.518E-02,
+        2.033E-02,
+        2.608E-02,
+        3.171E-02,
+        3.667E-02,
+        4.060E-02,
+        4.338E-02,
+        4.520E-02,
+        4.641E-02,
+        4.735E-02,
+        4.816E-02,
+        4.881E-02,
+        4.917E-02,
+        4.909E-02,
+        4.842E-02,
+        4.707E-02,
+        4.501E-02,
+        4.228E-02,
+        3.896E-02,
+        3.521E-02,
+        3.118E-02,
+        2.702E-02,
+        2.287E-02,
+        1.885E-02,
+        1.508E-02,
+        1.166E-02,
+        8.673E-03,
+        6.190E-03,
+        4.222E-03,
+        2.746E-03,
+        1.698E-03,
+        9.971E-04,
+        5.549E-04,
+        2.924E-04,
+        1.457E-04,
+        6.864E-05,
+        3.054E-05,
+        1.282E-05,
+        5.081E-06,
+        1.898E-06,
+        6.688E-07,
+        2.221E-07,
+        6.947E-08,
+        2.047E-08]
+
+
+
+Correct_MC_Dist = [2.560E-06, 5.239E-06, 1.420E-05, 5.005E-05, 1.001E-04, 2.705E-04, 1.999E-03, 6.097E-03, 1.046E-02, 1.383E-02, 
+                      1.685E-02, 2.055E-02, 2.572E-02, 3.262E-02, 4.121E-02, 4.977E-02, 5.539E-02, 5.725E-02, 5.607E-02, 5.312E-02, 5.008E-02, 4.763E-02, 
+                      4.558E-02, 4.363E-02, 4.159E-02, 3.933E-02, 3.681E-02, 3.406E-02, 3.116E-02, 2.818E-02, 2.519E-02, 2.226E-02, 1.946E-02, 1.682E-02, 
+                      1.437E-02, 1.215E-02, 1.016E-02, 8.400E-03, 6.873E-03, 5.564E-03, 4.457E-03, 3.533E-03, 2.772E-03, 2.154E-03, 1.656E-03, 1.261E-03, 
+                      9.513E-04, 7.107E-04, 5.259E-04, 3.856E-04, 2.801E-04, 2.017E-04, 1.439E-04, 1.017E-04, 7.126E-05, 4.948E-05, 3.405E-05, 2.322E-05, 
+                      1.570E-05, 5.005E-06]
+
+datapileup_70300_2012= [8.09479e-06,5.64253e-05,0.000234438,0.000708129,0.0017105,0.00349358,0.00625553,0.0100708,0.0148505,0.020349,0.0262113,0.0320441,0.0374847,0.0422506,0.0461603,0.0491294,0.0511502,0.0522664,0.0525496,0.0520821,0.0509474,0.0492268,0.0469996,0.0443453,0.0413455,0.0380853,0.0346522,0.0311346,0.0276184,0.0241833,0.0208995,0.0178247,0.0150024,0.0124611,0.0102148,0.00826464,0.00660065,0.00520452,0.00405205,0.00311564,0.00236635,0.00177563,0.00131662,0.000964921,0.000699098,0.000500836,0.000354862,0.00024873,0.000172505,0.00011841,8.04614e-05,5.41399e-05,3.60823e-05,2.38255e-05,1.55917e-05,1.01156e-05,6.50871e-06,4.15502e-06,2.63279e-06,1.65666e-06,1.03577e-06,6.43829e-07,3.98156e-07,2.45158e-07,1.50427e-07,9.20683e-08,5.62672e-08,3.43759e-08,2.10198e-08,1.28799e-08,7.91828e-09,4.88962e-09,3.03584e-09,1.89664e-09,1.19296e-09,7.55627e-10,4.81954e-10,3.09438e-10,1.99876e-10,1.2979e-10,8.46506e-11,5.54024e-11,3.63523e-11,2.38919e-11,1.57154e-11,1.0338e-11,6.79661e-12,4.46326e-12,2.9262e-12,1.91457e-12,1.24969e-12,8.13541e-13,5.2808e-13,3.41728e-13,2.20422e-13,1.417e-13,9.07784e-14,5.79506e-14,3.68613e-14,2.33614e-14]
+
+#Value_pu_mc = Summer2012_S10
+Value_pu_mc = Correct_MC_Dist
+
+pu_central = TFile.Open("Darin19p6/PU_Central.root",'read').Get('pileup')
+pu_up = TFile.Open("Darin19p6/PU_Up.root",'read').Get('pileup')
+pu_down = TFile.Open("Darin19p6/PU_Down.root",'read').Get('pileup')
+
+pu_central_new = TFile.Open("PU_Central.root",'read').Get('pileup')
+
+Value_pu_central=[]
+Value_pu_central_new = []
+Value_pu_up=[]
+Value_pu_down=[]
+
+for x in range(pu_up.GetNbinsX()):
+    bin = x +1
+    Value_pu_central.append(pu_central.GetBinContent(bin))
+    Value_pu_central_new.append(pu_central.GetBinContent(bin))
+    Value_pu_up.append(pu_up.GetBinContent(bin))
+    Value_pu_down.append(pu_down.GetBinContent(bin))
+
+
+Total_pu_central = sum(Value_pu_central)
+Total_pu_central_new = sum(Value_pu_central_new)
+Total_pu_up = sum(Value_pu_up)
+Total_pu_down = sum(Value_pu_down)
+Total_pu_mc = sum(Value_pu_mc)
+
+Total_mc_actual = sum(Correct_MC_Dist)
+
+Total_datapileup_70300_2012 = sum(datapileup_70300_2012)
+Combined_central=[]
+Combined_up=[]
+Combined_down=[]
+Corrected_Value=[]
+
+central = open('Snippet_central.C','w')
+up = open('Snippet_up.C','w')
+down = open('Snippet_down.C','w')
+correctcentral = open('Snippet_PlotCorrection_central_Oct23.C','w')
+correctup = open('Snippet_PlotCorrection_up_Oct23.C','w')
+correctdown = open('Snippet_PlotCorrection_down_Oct23.C','w')
+
+for x in range(len(Value_pu_central)):
+    print "Doing: "
+    print str(Value_pu_central[x])+ "/"+ str(Total_pu_central)
+    Value_pu_central[x] = Value_pu_central[x] / Total_pu_central
+    print "Normalized: "
+    print Value_pu_central[x]
+    Value_pu_central_new[x] = Value_pu_central_new[x] / Total_pu_central_new
+    Value_pu_up[x] = Value_pu_up[x] / Total_pu_up
+    Value_pu_down[x] = Value_pu_down[x] / Total_pu_down
+    Value_pu_mc[x] = Value_pu_mc[x] / Total_pu_mc
+
+    Correct_MC_Dist[x] = Correct_MC_Dist[x] / Total_mc_actual
+    datapileup_70300_2012[x] = datapileup_70300_2012[x] / Total_datapileup_70300_2012
+
+    print "Doing:"
+    print str(Value_pu_central[x])+"/"+str(Value_pu_mc[x])
+    Combined_central.append(Value_pu_central[x]/Value_pu_mc[x])
+    print "Correction:"
+    print Combined_central[x]
+    Combined_up.append(Value_pu_up[x]/Value_pu_mc[x])
+    Combined_down.append(Value_pu_down[x]/Value_pu_mc[x])
+
+    Corrected_Value.append(Value_pu_mc[x]/Correct_MC_Dist[x])
+
+    central.write("if ((N_PileUpInteractions > "+str(x-.5)+")*(N_PileUpInteractions < "+str(x+.5)+")) weight_pileup_central *= " + str(Combined_central[x]) + ";\n")
+    up.write("if ((N_PileUpInteractions > "+str(x-.5)+")*(N_PileUpInteractions < "+str(x+.5)+")) weight_pileup_up *= " + str(Combined_up[x]) + ";\n")
+    down.write("if ((N_PileUpInteractions > "+str(x-.5)+")*(N_PileUpInteractions < "+str(x+.5)+")) weight_pileup_down *= " + str(Combined_down[x]) + ";\n")
+    #correct.write('cut_mc += "((N_PileUpInteractions > ' +str(x-.5)+ ')*(N_PileUpInteractions < ' +str(x+.5)+ ')*('+str(Combined_central[x])+'))+";\n')
+    correctcentral.write('((N_PileUpInteractions > ' +str(x-.5)+ ')*(N_PileUpInteractions < ' +str(x+.5)+ ')*('+str(Combined_central[x])+'))+')
+    correctup.write('((N_PileUpInteractions > ' +str(x-.5)+ ')*(N_PileUpInteractions < ' +str(x+.5)+ ')*('+str(Combined_up[x])+'))+')
+    correctdown.write('((N_PileUpInteractions > ' +str(x-.5)+ ')*(N_PileUpInteractions < ' +str(x+.5)+ ')*('+str(Combined_down[x])+'))+')
+    
+
+Corrected_Value_total = sum(Corrected_Value)
+for x in range(len(Value_pu_central)):
+    #Corrected_Value[x] = Corrected_Value[x] / Corrected_Value_total
+    print str(Value_pu_central[x]/Value_pu_central_new[x])
+    #correct.write('cut_mc += "((N_PileUpInteractions > ' +str(x-.5)+ ')*(N_PileUpInteractions < ' +str(x+.5)+ ')*('+str(CurrentCorrection)+'))+";\n')
+    
+print Corrected_Value_total
+print Total_mc_actual
+print Total_pu_mc
+
+central.close()
+up.close()
+down.close()
+correct.close()

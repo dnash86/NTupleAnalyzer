@@ -1,0 +1,10 @@
+from ROOT import *
+import os
+import sys
+import math
+
+
+
+Old = os.popen("gawk -F "," '{print $NF}' CrossSections\[pb].csv").readlines()
+
+New = os.popen("cat June3Output.txt").readlines()

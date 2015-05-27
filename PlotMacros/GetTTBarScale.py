@@ -80,12 +80,23 @@ def FindNormalization(selection, emuselection):
     h_TTBar=MakeHisto('h_TTBar','t#bar{t}',TTBarDBin,"Charge_HEEPele1",binning,selection+LumiAndPU+Filters,TTStackStyle,"label")
     h_TTBar_emusel=MakeHisto('h_TTBar','t#bar{t}',emu_TTBarDBin,"Charge_HEEPele1",binning,emuselection+LumiAndPU+SingleMuTrigger+Filters,TTStackStyle,"label")
     
-    print selection
-    print emuselection
-    print h_TTBar.Integral()
-    print h_TTBar_emusel.Integral()
-    print "Scale fac = " + str(h_TTBar.Integral()/h_TTBar_emusel.Integral())
-    return (h_TTBar.Integral()/h_TTBar_emusel.Integral())
+    #print h_TTBar.Integral()
+    #print h_TTBar_emusel.Integral()
+    Scalefac  = h_TTBar.Integral()/h_TTBar_emusel.Integral()
+    print "Scale fac = " + str(Scalefac)
+
+    htt=TH1D('htt','htt',1,-1,3)
+    httemu=TH1D('httemu','httemu',1,-1,3)
+    htt.Sumw2()
+    httemu.Sumw2()
+    TTBarDBin.Project('htt','1.0',selection+LumiAndPU+Filters)
+    emu_TTBarDBin.Project('httemu','1.0',emuselection+LumiAndPU+Filters)
+    htt.Divide(httemu)
+
+    print str(h_TTBar.Integral())+"/"+str(h_TTBar_emusel.Integral())
+    print str(round(htt.GetBinContent(1),3)) +"+/-" +str(round(htt.GetBinError(1),3))
+    
+    return (Scalefac)
 
 
     

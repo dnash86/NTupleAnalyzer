@@ -1,0 +1,3 @@
+python MakePlotsSingle_ee2012_NewQCD.py -i Selection_ee_OppositeSign.csv -p -e /store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_Sep14_Systematics__EleScaleUp_2013_09_15_06_30_09/SummaryFiles -o EleScaleUp
+python MakePlotsSingle_ee2012_NewQCD.py -i Selection_ee_OppositeSign.csv -p -e /store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_Sep14_Systematics__JetScaleUp_2013_09_14_19_03_42/SummaryFiles -o JetScaleUp
+python MakePlotsSingle_ee2012_NewQCD.py -i Selection_ee_OppositeSign.csv -p

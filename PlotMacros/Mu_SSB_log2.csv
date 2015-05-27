@@ -1,0 +1,33 @@
+LQcoupling==1.0, LQmass ==300, (ST_pf_mumu_single > 250)*(max(M_muon1pfjet1,M_muon2pfjet1) > 250)
+39.1164741927
+LQcoupling==1.0, LQmass ==400, (ST_pf_mumu_single > 330)*(max(M_muon1pfjet1,M_muon2pfjet1) > 330)
+16.7245836564
+LQcoupling==1.0, LQmass ==500, (ST_pf_mumu_single > 490)*(max(M_muon1pfjet1,M_muon2pfjet1) > 410)
+7.96500304148
+LQcoupling==1.0, LQmass ==600, (ST_pf_mumu_single > 570)*(max(M_muon1pfjet1,M_muon2pfjet1) > 530)
+4.13344691164
+LQcoupling==1.0, LQmass ==700, (ST_pf_mumu_single > 650)*(max(M_muon1pfjet1,M_muon2pfjet1) > 610)
+2.28286066239
+LQcoupling==1.0, LQmass ==800, (ST_pf_mumu_single > 730)*(max(M_muon1pfjet1,M_muon2pfjet1) > 730)
+1.28171913112
+LQcoupling==1.0, LQmass ==900, (ST_pf_mumu_single > 810)*(max(M_muon1pfjet1,M_muon2pfjet1) > 810)
+0.79330319921
+LQcoupling==1.0, LQmass ==1000, (ST_pf_mumu_single > 890)*(max(M_muon1pfjet1,M_muon2pfjet1) > 810)
+0.4465802197
+LQcoupling==1.0, LQmass ==1100, (ST_pf_mumu_single > 1010)*(max(M_muon1pfjet1,M_muon2pfjet1) > 810)
+0.26866006497
+LQcoupling==1.0, LQmass ==1200, (ST_pf_mumu_single > 1050)*(max(M_muon1pfjet1,M_muon2pfjet1) > 810)
+0.160736893476
+LQcoupling==1.0, LQmass ==1300, (ST_pf_mumu_single > 1050)*(max(M_muon1pfjet1,M_muon2pfjet1) > 810)
+0.0888776663406
+LQcoupling==1.0, LQmass ==1400, (ST_pf_mumu_single > 1050)*(max(M_muon1pfjet1,M_muon2pfjet1) > 410)
+0.0519887398251
+LQcoupling==1.0, LQmass ==1500, (ST_pf_mumu_single > 1050)*(max(M_muon1pfjet1,M_muon2pfjet1) > 50)
+0.0287457076019
+LQcoupling==1.0, LQmass ==1600, (ST_pf_mumu_single > 1050)*(max(M_muon1pfjet1,M_muon2pfjet1) > 410)
+0.0193446020889
+LQcoupling==1.0, LQmass ==1700, (ST_pf_mumu_single > 1010)*(max(M_muon1pfjet1,M_muon2pfjet1) > 410)
+0.0127121537648
+LQcoupling==1.0, LQmass ==1800, (ST_pf_mumu_single > 1010)*(max(M_muon1pfjet1,M_muon2pfjet1) > 50)
+0.00734074226551
+

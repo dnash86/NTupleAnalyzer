@@ -44,6 +44,7 @@ OptimizationFile = '/afs/cern.ch/user/d/dnash/SingleLQAnalysis/CMSSW_5_0_0/src/N
 TreeName = 'PhysicalVariables'
 
 Trigger = '*(CurrentDoubleElePass>0.5)'
+#Trigger = ''
 Trigger_emu = '*(HLTMu40TriggerPass>0.5)'
 
 #Replicating the HEEP isolation criterion as a cut...
@@ -335,16 +336,16 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
 
     trees=[qcd_DoublePhotonData,qcd_WJetsJBin,qcd_DiBoson,qcd_ZJetsJBin,qcd_SingleTop,qcd_Gjets,qcd_TTBarDBin]
     weights=[1,-1,-1,-1,-1,-1,-1]
-    qcdselections=[binning,qcdselection+Filters+Trigger,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters]
+    qcdselections=[qcdselection+Filters+Trigger,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters]
 
     for i in range(len(trees)):
-        trees[i].Project('h','1.0',selections[i])
+        trees[i].Project('h','1.0',qcdselections[i])
         hdenom.Add(h,weights[i])
 
     hnum.Divide(hdenom)
 
-    I = htotal.GetBinContent(1)
-    E = htotal.GetBinError(1)
+    I = hnum.GetBinContent(1)
+    E = hnum.GetBinError(1)
 
     print str(I) +"+/-"+str(E)
     #Now the combined regions, will start with A 

@@ -88,6 +88,8 @@ print "Loading..."
 print Files_mumu
 #FileLocation='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_PDF_Muons_PDFMuons_2014_08_10_18_39_44/SummaryFiles'
 FileLocation='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_PDF_Muons_PDFMuonsCorrected_2014_08_18_22_48_01/SummaryFiles'
+#FileLocation='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_PDF_Muons_SaveWholeVector_PDFRetry_2014_08_17_23_53_52/SummaryFiles'
+#FileLocation='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_PDF_Muons_SaveWholeVector_MuonAllWholeVectorPDF_2014_08_23_20_14_25/SummaryFiles'
 if FileLocation=='blank':
     for f in os.popen('cmsLs '+Files_mumu+'| grep ".root" | gawk \'{print $NF}\' | gawk -F "/" \'{print $NF}\'').readlines():
         #print " = TFile.Open(\"root://eoscms//eos/cms/"+Files_mumu+"/"+f.replace("\n","")
@@ -438,6 +440,27 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
     Backgrounds=[h_WJets,h_TTBar,h_ZJets]
     
 
+
+    #if (zscale !=1.00):
+    if False:
+        Backgrounds=[h_WJets,h_QCD,h_TTBar,h_ZJets]
+    else:
+        Backgrounds=[h_WJets,h_TTBar,h_ZJets]
+    #Backgrounds=[h_WJets,h_TTBar,h_ZJets]
+
+    h_WJets.Add(h_TTBar)
+    h_WJets.Add(h_ZJets)
+
+    print "Background:"
+    for i in range(h_WJets.GetNbinsX()):
+        print h_WJets.GetBinContent(i)
+    print "Signal:"
+    for i in range(h_Signal.GetNbinsX()):
+        print h_Signal.GetBinContent(i)
+
+
+
+    print "W_Jets = " + str(h_WJets.Integral())
     MCStack = THStack ("MCStack","")
     BackgroundIntegral = sum(k.Integral() for k in Backgrounds)
     DataIntegral = h_Data.Integral()
@@ -745,6 +768,8 @@ def plot():
     #stbinning = [12,0,2000]
     #vertexbinning = [45,-0.5,44.5]
 
+
+    pdfweightbinning=[50,0,1000]
     filetag = "Preselection"
     xtag = " ["+filetag+"]"
 
@@ -763,7 +788,10 @@ def plot():
         return
 
 
-    print "Selection = "+ Selection
+
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, pdfweightbinning, "WEIGHTS_CTEQ[1]", "WEIGHTS_CTEQ[1]", "WEIGHTS_CTEQ[1]", "WEIGHTS_CTEQ[1]" +xtag, znorm, ttscaler,filetag)
+
+    return
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, jetcountbinning, "PFJetCount", "PFJetCount", "PFJetCount", "PFJetCount" +xtag, znorm, ttscaler,filetag)
 
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, stbinning, "ST_pf_mumu_single", "ST_pf_emu_single","", "S_{T} (GeV)" +xtag, znorm, ttscaler,filetag)

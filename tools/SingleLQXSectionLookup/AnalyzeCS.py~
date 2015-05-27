@@ -1,0 +1,99 @@
+import sys
+import os
+import csv
+
+csvfile = open("CrossSections[pb].csv",'r')
+
+
+Info=[]
+Xsection=[]
+
+for row in csv.reader(csvfile):
+    Info.append(row[0])
+    Xsection.append(row[1])
+
+
+
+MassLp2 = []
+MassLp4 = []
+MassLp6 = []
+MassLp8 = []
+MassL1p0 = []
+cmu=[]
+RatioLp2 = []
+RatioLp4 = []
+RatioLp6 = []
+RatioLp8 = []
+RatioL1p0 = []
+for i in range(len(Info)):
+    if "CMu" not in Info[i]:
+        Mass = str(int(Info[i].split(",")[0].split("=")[1].split("GeV")[0]))
+        Lambda_OnesPlace = Info[i].split(",")[1].split("L-")[1].split("_M")[0].split("p")[0]
+        Lambda_DecimalPlace = Info[i].split(",")[1].split("L-")[1].split("_M")[0].split("p")[1]
+        Lambda = Lambda_OnesPlace +"." +Lambda_DecimalPlace
+        if Lambda == "1.0":
+            MassL1p0.append(float(Xsection[i]))
+            RatioL1p0.append(Xsection[i])
+        elif Lambda == "0.8":
+            MassLp8.append(float(Xsection[i]))
+            RatioLp8.append(Xsection[i])
+        elif Lambda == "0.6":
+            MassLp6.append(float(Xsection[i]))
+            RatioLp6.append(Xsection[i])
+        elif Lambda == "0.4":
+            MassLp4.append(float(Xsection[i]))
+            RatioLp4.append(Xsection[i])
+        elif Lambda == "0.2":
+            MassLp2.append(float(Xsection[i]))
+            RatioLp2.append(Xsection[i])
+    elif "CMu" in Info[i]:
+         Mass = str(int(Info[i].split(",")[0].split("=")[1].split("GeV")[0]))
+         cmu.append(float(Xsection[i]))
+         
+mass = 200
+for i in range(len(MassLp2)):
+    mass = mass +100
+    print str(mass)+ "    &      " +str(cmu[i]/1000)
+
+
+
+
+mass = 200
+for i in range(len(MassLp2)):
+    mass = mass +100
+    print str(mass)+ "    &      " +str(MassLp2[i]/1000)
+
+mass = 200
+for i in range(len(MassLp4)):
+    mass = mass +100
+    print str(mass)+ "    &      " +str(MassLp4[i]/1000)
+
+mass = 200
+for i in range(len(MassLp6)):
+    mass = mass +100
+    print str(mass)+ "    &      " +str(MassLp6[i]/1000)
+
+mass = 200
+for i in range(len(MassLp8)):
+    mass = mass +100
+    print str(mass)+ "    &      " +str(MassLp8[i]/1000)
+
+mass = 200
+for i in range(len(MassL1p0)):
+    mass = mass +100
+    print str(mass)+ "    &      " +str(MassL1p0[i]/1000)
+
+
+
+#for i in range(len(MassLp2)):
+#    print str(MassLp2[i])+","+str(MassLp4[i])+","+str(MassLp6[i])+","+str(MassLp8[i])+","+str(MassL1p0[i])
+    
+#for i in range(len(MassLp2)):
+#    print str(MassLp2[i]/MassLp2[i])+","+str(MassLp4[i]/MassLp2[i])+","+str(MassLp6[i]/MassLp2[i])+","+str(MassLp8[i]/MassLp2[i])+","+str(MassL1p0[i]/MassLp2[i])
+    
+#for i in range(len(MassLp2)):
+#    print str(1)+","+str((0.4*0.4)/(0.2*0.2))+","+str((0.6*0.6)/(0.2*0.2))+","+str((0.8*0.8)/(0.2*0.2))+","+str((1.0*1.0)/(0.2*0.2))
+
+#for i in range(len(MassLp2)):
+    #print str(MassLp2[i]/(MassLp2[i]*1))+","+str(MassLp4[i]/(MassLp2[i]*4))+","+str(MassLp6[i]/(MassLp2[i]*9))+","+str(MassLp8[i]/(MassLp2[i]*16))+","+str(MassL1p0[i]/(MassLp2[i]*25)
+    

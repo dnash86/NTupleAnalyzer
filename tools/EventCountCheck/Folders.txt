@@ -1,0 +1,7 @@
+EOSDirectory
+/store/group/phys_exotica/leptonsPlusJets/RootNtuple/dnash/RootNtuple-V00-03-18-Summer12MC_ZJets_Systematics_FastSim_OneJet_20140826_210947
+/store/group/phys_exotica/leptonsPlusJets/RootNtuple/dnash/RootNtuple-V00-03-18-Summer12MC_ZJets_Systematics_FastSim_OneJet_20140826_210947
+/store/group/phys_exotica/leptonsPlusJets/RootNtuple/scooper/RootNtuple-V00-03-11-Summer12MC_DY2JetsToLL_ScaleSysts_MG_20131008_124216/
+/store/group/phys_exotica/leptonsPlusJets/RootNtuple/scooper/RootNtuple-V00-03-11-Summer12MC_DY2JetsToLL_ScaleSysts_MG_20131008_124216/
+/store/group/phys_exotica/leptonsPlusJets/RootNtuple/scooper/RootNtuple-V00-03-11-Summer12MC_DY3JetsToLL_ScaleSystematics_MG_20131014_180057/
+/store/group/phys_exotica/leptonsPlusJets/RootNtuple/scooper/RootNtuple-V00-03-11-Summer12MC_DY3JetsToLL_ScaleSystematics_MG_20131014_180057/

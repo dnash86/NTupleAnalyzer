@@ -16,7 +16,7 @@ def collectcentralvalues(directory,bgstodo):
         for bg_i in bgstodo:
             #print CurrentFile[i].replace('\n','').split(',')[bg_i]
             Background += float(CurrentFile[i].replace('\n','').split(',')[bg_i])
-        Signal = float(CurrentFile[i].replace('\n','').split(',')[8])
+        Signal = float(CurrentFile[i].replace('\n','').split(',')[-1])
         BackgroundValues.append(Background)
         SignalValues.append(Signal)
     return [BackgroundValues,SignalValues]
@@ -29,7 +29,7 @@ def GetReNormalizations(pdftype,directory):
     #print directory
     #print CentralFile
     for i in range(len(SignalFile)):
-        Signal = float(SignalFile[i].replace('\n','').split(',')[8])
+        Signal = float(SignalFile[i].replace('\n','').split(',')[-1])
         SignalValues.append(Signal)
 
     FileList = os.popen('ls '+directory+'/*'+pdftype+'*.txt').readlines()
@@ -40,7 +40,7 @@ def GetReNormalizations(pdftype,directory):
         SignalRenormalizations.append([])
         CurrentFile = os.popen('cat '+FileList[i].replace('\n','')).readlines()
         for j in range(len(CurrentFile)):
-            ThisSignal = float(CurrentFile[j].replace('\n','').split(',')[8])
+            ThisSignal = float(CurrentFile[j].replace('\n','').split(',')[-1])
             SignalRenormalizations[i].append(SignalValues[j]/ThisSignal)
 
     return SignalRenormalizations
@@ -66,10 +66,11 @@ def collect(pdftype,directory,bgstodo):
         #print CurrentFile
         for i in range(len(CurrentFile)):
             Background=0
+            #print CurrentFile[i].split(',')
             #for bg_i in [1,2,3,4,5]:
             for bg_i in bgstodo:
                 Background += float(CurrentFile[i].replace('\n','').split(',')[bg_i])
-            Signal = float(CurrentFile[i].replace('\n','').split(',')[8])
+            Signal = float(CurrentFile[i].replace('\n','').split(',')[-1])
 
             if Background > LargestBackgroundEventCount[i]:
                 #print LargestBackgroundEventCount[i]
@@ -118,7 +119,7 @@ def collectwithrenormalizations(pdftype,directory,renorms):
             #print CurrentFile[i]
             for bg_i in [1,2,3,4,5]:
                 Background += float(CurrentFile[i].replace('\n','').split(',')[bg_i])
-            Signal = float(CurrentFile[i].replace('\n','').split(',')[8])
+            Signal = float(CurrentFile[i].replace('\n','').split(',')[-1])
             #Renormalizing to the presel normalization
             Signal *= renorms[list_i][i]
 
@@ -276,6 +277,7 @@ def main():
     cteqvalues=collectwithrenormalizations('CTEQ',MainDir,cteqrenorms)
     mstwvalues=collectwithrenormalizations('MSTW',MainDir,mstwrenorms)
 
+    centralvalues=collectcentralvalues(MainDir,[2])
 
     logfile = open('Ele_SignalAcceptance_PDF.txt','w')
 

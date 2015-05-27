@@ -1,0 +1,16 @@
+@(#)CERN job starter $Date: 2010/06/23 14:22:16 $
+Working directory is </pool/lsf/dnash/493101654> on <lxbrb2117.cern.ch>
+
+**** Following environment variables are going to be unset.
+       CASCADE_PDFPATH
+/pool/lsf/dnash/493101654
+
+Job finished at Tue Jan 21 21:01:34 CET 2014 on node 
+ under linux version Scientific Linux CERN SLC release 5.10 (Boron)
+
+
+CERN statistics: This job used 0:00:03 NCU hours (3 NCU seconds)
+
+CERN statistics: This job used 0:00:03 KSI2K hours (3 KSI2K seconds)
+
+KSI2K = kilo-SpecInt2000 benchmark units = 1.00 NCU

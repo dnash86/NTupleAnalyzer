@@ -1,0 +1,3 @@
+wc FileList.txt > number.txt
+N=`gawk '(NR==1){print $1}' number`
+echo $N

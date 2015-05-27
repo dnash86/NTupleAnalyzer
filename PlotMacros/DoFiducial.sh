@@ -1,0 +1,3 @@
+python MakePlotsSingle_ee2012_NewQCD_NonEmulatedTriggers.py -F 3100 -i Selection_ee_NewQCDStudy_125jetptcut.csv -f OutputForFid3100
+python MakePlotsSingle_ee2012_NewQCD_NonEmulatedTriggers.py -F 2800 -i Selection_ee_NewQCDStudy_125jetptcut.csv -f OutputForFid2800
+python MakePlotsSingle_ee2012_NewQCD_NonEmulatedTriggers.py -F 2400 -i Selection_ee_NewQCDStudy_125jetptcut.csv -f OutputForFid2400

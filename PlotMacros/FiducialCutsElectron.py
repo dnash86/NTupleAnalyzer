@@ -18,8 +18,9 @@ from WeightsAndFilters import *
 #Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_TTBarReRun_2014_03_05_13_19_56/SummaryFiles'
 #Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_EMu_ReRun_2014_04_30_22_04_51/SummaryFiles'
 #Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_ForEMuFixedElectronEta_2014_07_01_16_02_33/SummaryFiles'
-Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_EMuLowerSkim_2014_07_20_21_49_58/SummaryFiles'
-
+#Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_EMuLowerSkim_2014_07_20_21_49_58/SummaryFiles'
+#Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_EMuLowerSkim_2014_07_20_21_49_58/SummaryFiles'
+Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_Foremu_EMuLowerFixMuonKinematics_2014_07_30_14_17_53/SummaryFiles'
 #Files_ee = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_ReRunOldNTuples_2014_02_25_21_20_15/SummaryFiles'
 #Files_ee = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_ReRun_OrderFixed_2014_05_06_15_52_31/SummaryFiles'
 
@@ -30,8 +31,23 @@ Files_ee='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_201
 Files_qcd = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ForQCDStudy_QCDReRunEdmundCS_NoPtJetElimination_2014_02_07_21_29_51/SummaryFiles'
 #Files_qcd = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ForQCDStudy_QCDVeryStrict_2014_04_13_21_31_02/SummaryFiles'
 
+
+
+#Files_CorrectedSignal = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_JustSignalTest_2014_09_21_17_20_04/SummaryFiles'
+
+#Files_CorrectedSignal='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_JustSignalTest_2014_09_22_16_42_16/SummaryFiles'
+
+#Files_CorrectedSignal='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_JustSignalTest_2014_09_22_21_08_35/SummaryFiles'
+
+#Files_CorrectedSignal='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_JustSignalTest_2014_09_23_15_24_21/SummaryFiles'
+#Files_CorrectedSignal='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_SignalDiEleMass_2014_10_27_13_44_10/SummaryFiles'
+
+
+Files_CorrectedSignal='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_ElectronStrict_FixedGenMassesStatusOne_2014_10_29_16_54_57/SummaryFiles'
 #OptimizationFile = '/afs/cern.ch/user/d/dnash/CMSSW_5_0_0/src/NTupleAnalyzer/Optimization/Ele_ValuesSSB.txt'
-OptimizationFile = '/afs/cern.ch/user/d/dnash/SingleLQAnalysis/CMSSW_5_0_0/src/NTupleAnalyzer/PlotMacros/Ele_SSB_log2.txt'
+#OptimizationFile = '/afs/cern.ch/user/d/dnash/SingleLQAnalysis/CMSSW_5_0_0/src/NTupleAnalyzer/PlotMacros/Ele_SSB_log2.txt'
+#OptimizationFile = '/afs/cern.ch/user/d/dnash/CMSSW_5_0_0/src/NTupleAnalyzer/PlotMacros/EleModifiedValues.txt'
+OptimizationFile='/afs/cern.ch/user/d/dnash/SingleLQAnalysis/CMSSW_5_0_0/src/NTupleAnalyzer/PlotMacros/EleOptimizationJust1p0.txt'
 
 TreeName = 'PhysicalVariables'
 
@@ -72,6 +88,9 @@ for n in range(len(a)):
         OutputIntegralsFile = a[n+1]
     if a[n]=='-e' or a[n]=='--errors':
         FileLocation = a[n+1]
+        Files_CorrectedSignal=a[n+2]
+    if a[n]=='-n' or a[n]=='--new_signal':
+        SignalFileLocation = a[n+1]
     if a[n]=='-pd' or a[n]=='--pileup_down':
         WhichPU=-1
     if a[n]=='-pu' or a[n]=='--pileup_up':
@@ -88,16 +107,25 @@ if not InputCuts:
 print "Loading..."
 print Files_ee
 if FileLocation=='blank':
-    for f in os.popen('cmsLs '+Files_ee+'| grep ".root" | gawk \'{print $NF}\' | gawk -F "/" \'{print $NF}\'').readlines():
-        #print " = TFile.Open(\"root://eoscms//eos/cms/"+Files_ee+"/"+f.replace("\n","")
+    #------Hacked for new signal files use with a ''
+    for f in os.popen('cmsLs '+Files_ee+'| grep ".root" | gawk \'{print $NF}\' | grep -v LQToUE | gawk -F "/" \'{print $NF}\'').readlines():
         exec(f.replace('-','_').replace(".root\n","")+" = TFile.Open(\"root://eoscms//eos/cms/"+Files_ee+"/"+f.replace("\n","")+"\")"+".Get(\""+TreeName+"\")")
-        #print f.replace('-','_').replace(".root\n","")+" = TFile.Open(\"root://eoscms//eos/cms/"+Files_ee+"/"+f.replace("\n","")+"\")"+".Get(\""+TreeName+"\")"
-        print f.replace('-','_').replace(".root\n","")
+        print f
+    for f in os.popen('cmsLs '+Files_CorrectedSignal+'| grep ".root" | gawk \'{print $NF}\'  | gawk -F "/" \'{print $NF}\'').readlines():
+        #print f.replace('-','_').replace(".root\n","")+" = TFile.Open(\"root://eoscms//eos/cms/"+Files_CorrectedSignal+"/"+f.replace("\n","")+"\")"+".Get(\""+TreeName+"\")"
+        exec(f.replace('-','_').replace(".root\n","")+" = TFile.Open(\"root://eoscms//eos/cms/"+Files_CorrectedSignal+"/"+f.replace("\n","")+"\")"+".Get(\""+TreeName+"\")")
+
+
 else:
+    #------Hacked for new signal files use with a ''
     print "DoublePhotonData= TFile.Open(\"root://eoscms//eos/cms/"+Files_ee+"/"+"DoublePhotonData.root"+"\")"+".Get(\""+TreeName+"\")"
     exec("DoublePhotonData= TFile.Open(\"root://eoscms//eos/cms/"+Files_ee+"/"+"DoublePhotonData.root"+"\")"+".Get(\""+TreeName+"\")")   
-    for f in os.popen('cmsLs '+FileLocation+'| grep ".root" | gawk \'{print $NF}\' | gawk -F "/" \'{print $NF}\'').readlines():
+    for f in os.popen('cmsLs '+FileLocation+'| grep ".root" | gawk \'{print $NF}\' | grep -v LQToUE | gawk -F "/" \'{print $NF}\'').readlines():
         exec(f.replace('-','_').replace(".root\n","")+" = TFile.Open(\"root://eoscms//eos/cms/"+FileLocation+"/"+f.replace("\n","")+"\")"+".Get(\""+TreeName+"\")")       
+    for f in os.popen('cmsLs '+Files_CorrectedSignal+'| grep ".root" | gawk \'{print $NF}\'  | gawk -F "/" \'{print $NF}\'').readlines():
+        #print f.replace('-','_').replace(".root\n","")+" = TFile.Open(\"root://eoscms//eos/cms/"+Files_CorrectedSignal+"/"+f.replace("\n","")+"\")"+".Get(\""+TreeName+"\")"
+        exec(f.replace('-','_').replace(".root\n","")+" = TFile.Open(\"root://eoscms//eos/cms/"+Files_CorrectedSignal+"/"+f.replace("\n","")+"\")"+".Get(\""+TreeName+"\")")
+
     
 for f in os.popen('cmsLs '+Files_emu+'| grep ".root" | grep -v LQTo | gawk \'{print $NF}\' | gawk -F "/" \'{print $NF}\'').readlines():
     exec('emu_'+f.replace('-','_').replace(".root\n","")+" = TFile.Open(\"root://eoscms//eos/cms/"+Files_emu+"/"+f.replace("\n","")+"\")"+".Get(\""+TreeName+"\")")
@@ -202,10 +230,13 @@ def integrate():
     
     JustIntegrate=True
     drawSub = False
-    use_emu = False
-    ttscaler = 0.5942599
-    znorm = 0.98580048415651985403
-        
+    use_emu = True
+    #ttscaler = 0.5942599
+    #znorm = 0.98580048415651985403
+
+    ttscaler =  0.435 
+    znorm = 0.981327517888
+     
     chargebinning=[11,-5,5]
 
     filetag = "Preselection"
@@ -231,7 +262,7 @@ def integrate():
         for x in [(300+100*y) for y in range(MassRangeLength)]:
             lq_choice = "*(LQmass=="+str(x)+")*(LQisCMu==0)*(LQcoupling=="+str( (float)(i+1)/5)+")*(1/1000)"
             #AdditionalCut = ""
-            AdditionalCut = "*(Mass_genelectron1genjet > "+str(float(x)*0.4)+")"
+            AdditionalCut = "*(  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet > "+str(float(x)*0.66)+") +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet > "+str(float(x)*0.66)+")  ) *(Mass_genele1ele2 > 110)"
             
             #print lq_choice
             #Cuts=os.popen("grep -A 1 "+Coupling+ " /afs/cern.ch/work/d/dnash/CMSSW_5_0_0/src/NTupleAnalyzer/Optimization/Ele_SSB_log2.txt  | grep -A 1 \"Mass = " + str(x) + "\" | grep ST_pf").readline().replace('\n','')
@@ -245,6 +276,10 @@ def integrate():
 
             File = open(OutputIntegralsFile+"_Errors.txt",'a') 
             File.write(IntsAndErrs[1]+'\n')
+            File.close()
+
+            File = open(OutputIntegralsFile+"_Entries.txt",'a') 
+            File.write(IntsAndErrs[2]+'\n')
             File.close()
             
             
@@ -322,9 +357,9 @@ def GetIntegralsAndErrors(JustIntegrate,lq_choice, selection, emuselection, qcds
     if WhichPU==0:
         CorrectLumiAndPU=LumiAndPU
     if WhichPU==1:
-        CorrectLumiAndPU=LumiAndPU
+        CorrectLumiAndPU=LumiAndPUUp
     if WhichPU==-1:
-        CorrectLumiAndPU=LumiAndPU
+        CorrectLumiAndPU=LumiAndPUDown
 
     ### Make the plots
     
@@ -368,22 +403,22 @@ def GetIntegralsAndErrors(JustIntegrate,lq_choice, selection, emuselection, qcds
     if JustIntegrate:
         ValuesString= str(DataValues[0])+","+str(TTBarValues[0]) + "," + str(ZJetsValues[0]) + "," + str(DiBosonValues[0]) + "," + str(SingleTopValues[0]) + "," + str(WJetsValues[0]) + "," + str(GJetsValues[0]) + ","+str(QCDValues[0]) + "," + str(SignalValues[0])
         ErrorsString= str(DataValues[1])+","+str(TTBarValues[1]) + "," + str(ZJetsValues[1]) + "," + str(DiBosonValues[1]) + "," + str(SingleTopValues[1]) + "," + str(WJetsValues[1]) + "," + str(GJetsValues[1]) + ","+str(QCDValues[1]) + "," + str(SignalValues[1])
-
-        return [ValuesString,ErrorsString]
+        EntriesString= str(DataValues[2])+","+str(TTBarValues[2]) + "," + str(ZJetsValues[2]) + "," + str(DiBosonValues[2]) + "," + str(SingleTopValues[2]) + "," + str(WJetsValues[2]) + "," + str(GJetsValues[2])+ "," + str(QCDValues[2]) + "," + str(SignalValues[2])
+        return [ValuesString,ErrorsString,EntriesString]
                    
     
     
 def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, use_emu, drawSub, binning, variable, variable_emu, variable_qcd, xlabel,zscale,ttscaler,tag):
-    SetStyle()
+    #SetStyle()
     channel = "ee"
     Luminosity = "19600"
 
     if WhichPU==0:
         CorrectLumiAndPU=LumiAndPU
     if WhichPU==1:
-        CorrectLumiAndPU=LumiAndPU
+        CorrectLumiAndPU=LumiAndPUUp
     if WhichPU==-1:
-        CorrectLumiAndPU=LumiAndPU
+        CorrectLumiAndPU=LumiAndPUDown
 
     MaxRescaler=10.
     if zscale==1.0:
@@ -435,6 +470,7 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
     
     #print selection
     h_Signal=MakeHisto('h_Signal','LQToUE_Single_L_0p2',LQToUE_Single_L_0p2,variable,binning,selection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters+lq_choice,SignalStyle,Label)
+    print selection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters+lq_choice
     h_LQToUE_Single_L0p4=MakeHisto('h_LQToUE_Single_L0p4','LQToUE_Single_L0p4',LQToUE_Single_L_0p4,variable,binning,selection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters+lq_choice,SignalStyle,Label)
     h_Signal.Add(h_LQToUE_Single_L0p4)
     h_LQToUE_Single_L0p6=MakeHisto('h_LQToUE_Single_L0p6','LQToUE_Single_L0p6',LQToUE_Single_L_0p6,variable,binning,selection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters+lq_choice,SignalStyle,Label)
@@ -450,183 +486,39 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
     h_DiBoson=MakeHisto('h_DiBoson','DiBoson',DiBoson,variable,binning,selection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,DiBosonStackStyle,Label)
     h_SingleTop=MakeHisto('h_SingleTop','SingleTop',SingleTop,variable,binning,selection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,StopStackStyle,Label)    
 
-    h_ZJets=MakeHisto('h_ZJets','Z+Jets',ZJetsJBin,variable,binning,selection+'*('+str(zscale)+')'+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,ZStackStyle,Label)
-    #print "Made the normal plots"
-
-    if use_emu:
-        print R_ee_over_mu
-        h_TTBar=MakeHisto('h_TTBar','t#bar{t}',emu_SingleMuData,variable_emu,binning,emuselection+Filters+Trigger_emu+R_ee_over_mu,TTStackStyle,Label)
-        h_emu_WJets=MakeHisto('h_emu_WJets','W+Jets',emu_WJetsJBin,variable_emu,binning,emuselection+CorrectLumiAndPU+SingleMuNonEmulatedTrigger+R_ee_over_mu+Filters,TTStackStyle,Label)
-        h_emu_DiBoson=MakeHisto('h_emu_DiBoson','DiBoson',emu_DiBoson,variable_emu,binning,emuselection+CorrectLumiAndPU+SingleMuNonEmulatedTrigger+R_ee_over_mu+Filters,TTStackStyle,Label)
-        h_emu_ZJets=MakeHisto('h_emu_ZJets','Z+Jets',emu_ZJetsJBin,variable_emu,binning,emuselection+CorrectLumiAndPU+SingleMuNonEmulatedTrigger+R_ee_over_mu+Filters,TTStackStyle,Label)
-        h_emu_SingleTop=MakeHisto('h_emu_SingleTop','SingleTop',emu_SingleTop,variable_emu,binning,emuselection+CorrectLumiAndPU+SingleMuNonEmulatedTrigger+R_ee_over_mu+Filters,TTStackStyle,Label)
-        #h_emu_GJets=MakeHisto('h_Gjets','t#bar{t}',emu_Gjets,variable,binning,tt_sel_weight,GJetsStackStyle,Label)
-
-        h_TTBar.Add(h_emu_WJets,-1)
-        h_TTBar.Add(h_emu_DiBoson,-1)
-        h_TTBar.Add(h_emu_ZJets,-1)
-        h_TTBar.Add(h_emu_SingleTop,-1)
-
-        h_TTBar.Scale(ttscaler)
-    else:
-        h_TTBar=MakeHisto('h_TTBar','t#bar{t}',TTBarDBin,variable,binning,selection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,TTStackStyle,Label)
-
-    #print "Made the ttbar plots"
-
-    #If the channel is ee, include G Jets background and the QCD fake rate sample
-    h_GJets=MakeHisto('h_GJets','#gamma+Jets',Gjets,variable,binning,selection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,GJetsStackStyle,Label)
-    if (zscale != 1.00):
-
-        #if (zscale != 1.00):
-        if True:
-            h_QCD=MakeHisto('h_QCD','Data',DoublePhotonData,variable,binning,qcdselection+Filters+Trigger,QCDStackStyle,Label)
-
-            h_qcd_WJets=MakeHisto('h_qcd_WJets','W+Jets',WJetsJBin,variable,binning,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,WStackStyle,Label)
-            h_qcd_DiBoson=MakeHisto('h_qcd_DiBoson','DiBoson',DiBoson,variable,binning,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,DiBosonStackStyle,Label)
-            h_qcd_ZJets=MakeHisto('h_qcd_ZJets','Z+Jets',ZJetsJBin,variable,binning,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,ZStackStyle,Label)
-            h_qcd_SingleTop=MakeHisto('h_qcd_SingleTop','SingleTop',SingleTop,variable,binning,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,StopStackStyle,Label)
-            h_qcd_GJets=MakeHisto('h_qcd_Gjets','#gamma+Jets',Gjets,variable,binning,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,GJetsStackStyle,Label)
-            h_qcd_TTBar=MakeHisto('h_qcd_TTBar','t#bar{t}',TTBarDBin,variable,binning,qcdselection+CorrectLumiAndPU+DoubleENonEmulatedTrigger+Filters,TTStackStyle,Label)
-
-            print "QCD Integral = " + str(h_QCD.Integral())
-            h_QCD.Add(h_qcd_WJets,-1)
-            print "QCD Integral = " + str(h_QCD.Integral())
-            h_QCD.Add(h_qcd_DiBoson,-1)
-            print "QCD Integral = " + str(h_QCD.Integral())
-            h_QCD.Add(h_qcd_ZJets,-1)
-            print "QCD Integral = " + str(h_QCD.Integral())
-            h_QCD.Add(h_qcd_SingleTop,-1)
-            print "QCD Integral = " + str(h_QCD.Integral())
-            h_QCD.Add(h_qcd_GJets,-1)
-            print "QCD Integral = " + str(h_QCD.Integral())
-            h_QCD.Add(h_qcd_TTBar,-1)
-            print "QCD Integral = " + str(h_QCD.Integral())
-            
-            nBins = binning[0]
-           
-
-        #else:
-            #h_QCD=MakeHisto('h_qcd_Data','Data',qcd_SinglePhotonData,variable_qcd,binning,qcdselection+Filters,DataRecoStyle,Label)
-            #h_QCD.Scale(0.0000000000000001) 
-    
-            #print "Made the QCD plots"
-
-
-    if JustIntegrate:
-        return str(h_Data.Integral())+","+str(h_TTBar.Integral()) + "," + str(h_ZJets.Integral()) + "," + str(h_DiBoson.Integral()) + "," + str(h_SingleTop.Integral()) + "," + str(h_WJets.Integral()) + "," + str(h_GJets.Integral()) + ","+str(h_QCD.Integral()) + "," + str(h_Signal.Integral())
-        
-    #If the channel is mumu, no need to include G Jets and use the mu enriched QCD sample
-    #if channel = "mumu":
-    #    h_QCDMu=MakeHisto('h_QCDMu','QCD',QCDMu,variable,binning,tt_sel_weight,QCDStackStyle,Label)
-                                   
-
-    #Adding up backgrounds...
-    h_WJets.SetTitle("Other Backgrounds")
-    h_WJets.Add(h_DiBoson)
-    h_WJets.Add(h_SingleTop)
-    h_WJets.Add(h_GJets)
-    if (zscale !=1.00):
-        Backgrounds=[h_WJets,h_QCD,h_TTBar,h_ZJets]
-    else:
-        Backgrounds=[h_WJets,h_TTBar,h_ZJets]
-    #Backgrounds=[h_WJets,h_TTBar,h_ZJets]
-
-    print "W_Jets = " + str(h_WJets.Integral())
-    MCStack = THStack ("MCStack","")
-    BackgroundIntegral = sum(k.Integral() for k in Backgrounds)
-    DataIntegral = h_Data.Integral()
-    ZIntegral = h_ZJets.Integral()
-
-    SigmaData = math.sqrt(DataIntegral)
-    SigmaNonZ = 0
-    if (zscale !=1.00):
-        NonZSigmaBackgrounds=[h_WJets,h_QCD,h_TTBar]
-    else:
-        NonZSigmaBackgrounds=[h_WJets,h_TTBar]
-    for bg in Backgrounds:
-        if bg.GetEntries() > 0:
-            SigmaNonZ += bg.Integral() * math.pow(bg.GetEntries(),-0.5)
-    SigmaZ = h_ZJets.Integral()*math.pow(h_ZJets.GetEntries(),-0.5)
-
-    print "Data = " + str(DataIntegral)
-    print "Background = " + str(BackgroundIntegral)
-    print "tt : " + str(h_TTBar.Integral()) + "+/-" +str( h_TTBar.Integral()* math.pow(h_TTBar.GetEntries(),-0.5) )
-    print "z : " + str(ZIntegral) + "+/-" +str( h_ZJets.Integral()* math.pow(h_ZJets.GetEntries(),-0.5) )
-    if (zscale !=1.00):
-        print "qcd : " + str(h_QCD.Integral())
-    print "Signal : " +str(h_Signal.Integral())
-        
-    ZfracNumerator = DataIntegral - (BackgroundIntegral - ZIntegral)
-    ZfracDenominator = ZIntegral
-    Zfrac = ZfracNumerator/ ZfracDenominator
-    
-    SigmaZfracNumerator = math.sqrt(math.pow(SigmaData,2)+math.pow(SigmaNonZ,2))
-    SigmaZfracDenominator = SigmaNonZ
-    
-    SigmaZfrac = Zfrac * math.pow( (math.pow(SigmaZfracNumerator/ZfracNumerator,2) +math.pow(SigmaZfracDenominator/ZfracDenominator,2) ),0.5)
-
-    print "Z Scale Factor: " + str(Zfrac) + "+/-"+str(SigmaZfrac)
-
-    if (zscale == 1.0):
-        File = open('ZScale_ee.tex','w')
-        File.write('\begin{tabular}{|c|c|}\n')
-        File.write('{Z}  & {'+str(round(h_ZJets.Integral(),2))+'} \\\\\n')
-
-        File.write('\hline\n')
-        File.write('{Data}  & {'+str(round(DataIntegral,2))+'} \\\\\n')
-        File.write('{$t\bar{t}$}  & {'+str(round(h_TTBar.Integral(),2))+'} \\\\\n')
-        File.write('{Single Top}  & {'+str(round(h_SingleTop.Integral(),2))+'} \\\\\n')
-        File.write('{DiBoson}  & {'+str(round(h_DiBoson.Integral(),2))+'} \\\\\n')
-        File.write('{W}  & {'+str(round(h_WJets.Integral(),2))+'} \\\\\n')
-        #File.write('{QCD}  & {'+str(round(h_QCD.Integral(),2))+'} \\\\\n')
-        File.write('\hline\n')
-        File.write('\hline\n')
-        File.write('{$R_{Z}$}  & {'+str(round(Zfrac,2))+"+/-"+str(round(SigmaZfrac,2))+'} \\\\\n')
-        File.write('\end{tabular}\n')
-        File.close()
-
-    #print 'Stacking...  '	
-    for histo in Backgrounds:
-        MCStack.Add(histo)
-        histo.SetMaximum(MaxRescaler*h_Data.GetMaximum())
-                                   
-    MCStack.Draw("HIST")
     c1.cd(1).SetLogy()
 
-    MCStack.SetMinimum(.1)
-    MCStack.SetMaximum(MaxRescaler*h_Data.GetMaximum())                              
-    MCStack=BeautifyStack(MCStack,Label)
+    #MCStack.SetMinimum(.1)
+    #MCStack.SetMaximum(MaxRescaler*h_Data.GetMaximum())                              
+    #MCStack=BeautifyStack(MCStack,Label)
+    h_Signal.SetMaximum(1)
+    h_Signal.SetMinimum(.0001)
     h_Signal.SetLineStyle(3)
-    h_Signal.Draw("HISTSAME")
+
+    #Additional style fixing things
+    h_Signal.SetTitle("")
+    h_Signal.GetXaxis().SetTitleSize(0.06)
+    h_Signal.GetYaxis().SetTitleSize(0.06)
+
+    h_Signal.GetXaxis().SetLabelSize(0.04)
+    h_Signal.GetYaxis().SetLabelSize(0.04)
+
+    h_Signal.GetXaxis().SetTitleOffset(0.7)
+    h_Signal.GetYaxis().SetTitleOffset(0.7)
+
+
+    h_Signal.Draw("HIST")
     #h_Signal.Draw("HISTSAME")
-    h_Data.Draw("HISTEPSAME")
+    #h_Data.Draw("HISTEPSAME")
 
-    leg=TLegend(0.6,0.63,0.91,0.91,"","brNDC")
-    leg.SetTextFont(132)
-    leg.SetFillColor(0)
-    leg.SetBorderSize(0)
-    leg.AddEntry(h_Data,"Data 2012, "+Luminosity+" pb^{-1}")
-    leg.AddEntry(h_ZJets,"Z/#gamma* + jets")
-    if (zscale !=1.00):
-        leg.AddEntry(h_QCD,"QCD multijets")
 
-    leg.AddEntry(h_Signal,"LQ Mass = 700, #lambda = 0.2")
-
-    if (not use_emu):
-        leg.AddEntry(h_TTBar,"t#bar{t}")
-    if (use_emu):
-        leg.AddEntry(h_TTBar,"t#bar{t} data driven")
-	
-    leg.AddEntry(h_WJets,"Other backgrounds")
-    leg.Draw("SAME")
-
-    h_Data.SetMinimum(.1)
-    h_Data.SetMaximum(MaxRescaler*(h_Data.GetMaximum()))
 
     txt = TLatex((binning[2]-binning[1])*.02+binning[1],.3*5.0*h_Data.GetMaximum(), "Work in Progress")
     txt.SetTextFont(132)
     txt.SetTextSize(0.06)
     txt.Draw()
+
+    drawSub=False
     if drawSub:
         pad2.cd()
 	
@@ -719,10 +611,12 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
         h_compr.Draw("ep")
         line0.Draw("SAME")
         print "Made the chi2 plots"
-	if UseOutputDir:
-            c1.Print(OutputDir+"/"+variable+"_"+tag+".png");
-        else:
-            c1.Print("PlotsSingleSub_ee2012/"+variable+"_"+tag+".png");
+    if UseOutputDir:
+        c1.Print(OutputDir+"/"+variable+"_"+tag+".png");
+        c1.Print(OutputDir+"/"+variable+"_"+tag+".pdf");
+    else:
+        c1.Print("PlotsSingleSub_ee2012/"+variable+"_"+tag+".png");
+        c1.Print("PlotsSingleSub_ee2012/"+variable+"_"+tag+".pdf");
 
 def GetSelections(ifile):
     import csv
@@ -763,7 +657,7 @@ def GetSelections(ifile):
 
 def plot():
     JustIntegrate=False
-    drawSub = True
+    drawSub = False
     use_emu = True
     #ttscaler = 0.489171949638 #0.479080479194  #0.488708924407 #0.490929901239
     ttscaler =  0.435 #0.435481463283
@@ -821,11 +715,12 @@ def plot():
     #Selection_emu +=Trigger_emu
     #Selection_qcd += Trigger
 
-    lq_choice = "*(LQmass==700)*(LQisCMu==0)*(LQcoupling==1.0)*(1/1000)"
+    lq_choice = "*(LQmass==2000)*(LQisCMu==0)*(LQcoupling==1.0)*(1/1000)"
+    #lq_choice+="*(  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet > "+str(1800*0.4)+") +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet > "+str(1800*0.4)+")  ) *(Mass_genele1ele2 > 110)"
 
     ptbinning = [50,0,1000]
     etabinning = [48,-2.4,2.4]
-    mbinning = [50,0,2000]
+    mbinning = [50,0,3500]
     stbinning = [50,0,2000]
     vertexbinning = [45,-0.5,44.5]
     deltarbinning = [50,0,5]
@@ -839,16 +734,24 @@ def plot():
 
     filetag = "Preselection"
     xtag = " ["+filetag+"]"
+    xtag=""
 
     print "About to start drawing the Histos..."
     print Selection
 
-    if False:
+    if True:
         filetag = "Fullselection"
         xtag = " ["+filetag+"]"
-        Selection +='*(ST_pf_ee_single > 700)*(M_singleLQ_epfjet_Masshigh > 500)'
-        Selection_emu +='*(ST_pf_emu_single > 700)*(M_singleLQ_epfjet_Masshigh > 500)'
-        Selection_qcd += '*(ST_pf_ee_single > 700)*(M_singleLQ_epfjet_Masshigh > 500)'
+        xtag=""
+        Selection +='*(ST_pf_ee_single > 900)*(M_singleLQ_epfjet_Masshigh > 1300)'
+        Selection_emu +='*(ST_pf_emu_single > 900)*(M_singleLQ_epfjet_Masshigh > 1300)'
+        Selection_qcd += '*(ST_pf_ee_single > 900)*(M_singleLQ_epfjet_Masshigh > 1300)'
+
+        print lq_choice
+        DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, False, drawSub, mbinning, "(  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))", "M_singleLQ_emusel_Masshigh","max(M_QCDele1pfjet1,M_QCDele2pfjet1)", "M_{lj,gen}" +xtag, znorm, ttscaler,filetag)
+        return
+        DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, False, drawSub, mbinning, "(  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))", "M_singleLQ_emusel_Masshigh","max(M_QCDele1pfjet1,M_QCDele2pfjet1)", "FiducialMass" +xtag, znorm, ttscaler,filetag)
+        return
 
         DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, mbinning, "M_singleLQ_epfjet_Masshigh", "M_singleLQ_emusel_Masshigh","max(M_QCDele1pfjet1,M_QCDele2pfjet1)", "M_{e jet} " +xtag, znorm, ttscaler,filetag)
 
@@ -856,6 +759,36 @@ def plot():
         return
 
 
+    print lq_choice
+    #DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, False, drawSub, mbinning, "Mass_genelectron1genjet", "M_singleLQ_emusel_Masshigh","max(M_QCDele1pfjet1,M_QCDele2pfjet1)", "FiducialMass" +xtag, znorm, ttscaler,filetag)
+
+    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, False, drawSub, mbinning, "(  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))", "M_singleLQ_emusel_Masshigh","max(M_QCDele1pfjet1,M_QCDele2pfjet1)", "M_{lj,gen}" +xtag, znorm, ttscaler,filetag)
+    return
+
+    #DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, False, drawSub, mbinning, "Mass_genele1ele2", "M_singleLQ_emusel_Masshigh","max(M_QCDele1pfjet1,M_QCDele2pfjet1)", "FiducialMass" +xtag, znorm, ttscaler,filetag)
+
+    #DrawHisto(JustIntegrate,lq_choice, Selection+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", Selection_emu+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", Selection_qcd+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", False, drawSub, mbinning, "(  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))", "M_singleLQ_emusel_Masshigh","max(M_QCDele1pfjet1,M_QCDele2pfjet1)", "FiducialMass" +xtag, znorm, ttscaler,filetag)
+
+
+    DrawHisto(JustIntegrate,lq_choice, Selection+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", Selection_emu+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", Selection_qcd+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", use_emu, drawSub, mbinning, "M_singleLQ_epfjet_Masshigh", "M_singleLQ_emusel_Masshigh","max(M_QCDele1pfjet1,M_QCDele2pfjet1)", "M_{e jet} " +xtag, znorm, ttscaler,filetag)
+
+
+   
+
+    DrawHisto(JustIntegrate,lq_choice, Selection+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", Selection_emu+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", Selection_qcd+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", use_emu, drawSub, jetcountbinning, "PFJetCount", "PFJetCount", "PFJetCount", "PFJetCount" +xtag, znorm, ttscaler,filetag)
+
+    DrawHisto(JustIntegrate,lq_choice, Selection+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", Selection_emu+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", Selection_qcd+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", use_emu, drawSub, ptbinning, "Pt_pfjet1","Pt_pfjet1", "Pt_pfjet1", "p_{T} (jet_{1}) (GeV) " +xtag,znorm, ttscaler,filetag)
+
+   
+    DrawHisto(JustIntegrate,lq_choice, Selection+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", Selection_emu+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", Selection_qcd+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", use_emu, drawSub, stbinning, "ST_pf_ee_single", "ST_pf_emu_single","(Pt_QCDele1+Pt_QCDele2+Pt_pfjet1)", "S_{T} (GeV)" +xtag, znorm, ttscaler,filetag)
+
+
+    DrawHisto(JustIntegrate,lq_choice, Selection+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", Selection_emu+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", Selection_qcd+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", use_emu, drawSub, ptbinning, "Pt_HEEPele1", "max(Pt_HEEPele1,Pt_muon1)","Pt_QCDele1", "p_{T} (e_{1}) (GeV) " +xtag,znorm, ttscaler,filetag)
+    DrawHisto(JustIntegrate,lq_choice, Selection+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", Selection_emu+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)", Selection_qcd+"*((  (Pt_genelectron1 > Pt_genelectron2) *(Mass_genelectron1genjet) +(Pt_genelectron1 < Pt_genelectron2) *(Mass_genelectron2genjet))==0)",use_emu , drawSub, ptbinning,  "Pt_HEEPele2", "min(Pt_HEEPele1,Pt_muon1)", "Pt_QCDele2","p_{T} (e_{2}) (GeV) " +xtag,znorm, ttscaler,filetag)
+    return
+
+
+   
 
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, jetcountbinning, "PFJetCount", "PFJetCount", "PFJetCount", "PFJetCount" +xtag, znorm, ttscaler,filetag)
 
@@ -867,7 +800,7 @@ def plot():
 
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, ptbinning, "Pt_HEEPele1", "max(Pt_HEEPele1,Pt_muon1)","Pt_QCDele1", "p_{T} (e_{1}) (GeV) " +xtag,znorm, ttscaler,filetag)
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd,use_emu , drawSub, ptbinning,  "Pt_HEEPele2", "min(Pt_HEEPele1,Pt_muon1)", "Pt_QCDele2","p_{T} (e_{2}) (GeV) " +xtag,znorm, ttscaler,filetag)
-
+    return
 
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, chargebinning, "Charge_HEEPele1*Charge_HEEPele2", "Charge_HEEPele1*Charge_muon1","Charge_HEEPele1*Charge_HEEPele2", "Combined charge " +xtag, znorm, ttscaler,filetag)
 
@@ -882,7 +815,6 @@ def plot():
 
     #return
 
-    DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, mbinning, "M_singleLQ_epfjet_Masshigh", "M_singleLQ_emusel_Masshigh","max(M_QCDele1pfjet1,M_QCDele2pfjet1)", "M_{e jet} " +xtag, znorm, ttscaler,filetag)
 
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, vertexbinning, "N_Vertices", "N_Vertices", "N_Vertices", "N_{Vertices}" +xtag, znorm, ttscaler,filetag)	
 

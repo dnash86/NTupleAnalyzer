@@ -21,12 +21,16 @@ Files_emu = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_
 Files_mumu='/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_MuonStrict_MuonFixID_2014_07_30_14_18_20/SummaryFiles'
 
 
-Files_qcd = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_MuonABCDStudy_MuonABCDStudy_2014_08_11_18_32_40/SummaryFiles'
+#Files_qcd = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_MuonABCDStudy_MuonABCDStudy_2014_08_11_18_32_40/SummaryFiles'
+#Files_qcd = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_MuonABCDStudy_QCDBtagStudy_2014_09_03_13_35_09/SummaryFiles'
+Files_qcd = '/store/user/dnash/LQAnalyzerOutput2/NTupleAnalyzer_V00_02_06_David_2012_MuonABCDStudy_QCDBtagStudy_2014_09_04_20_23_09/SummaryFiles'
+
 OptimizationFile = '/afs/cern.ch/user/d/dnash/SingleLQAnalysis/CMSSW_5_0_0/src/NTupleAnalyzer/PlotMacros/Ele_SSB_log2.txt'
 
 TreeName = 'PhysicalVariables'
 
 Trigger = '*(HLTMu40TriggerPass>0.5)'
+#Trigger = ''
 Trigger_emu = '*(HLTMu40TriggerPass>0.5)'
 
 
@@ -165,6 +169,9 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
     #print "GJets = "+str(h_qcd_A_GJets.Integral())
     print "TTBar = "+str(h_qcd_A_TTBar.Integral())
 
+    h_QCDTestA=MakeHisto('h_QCDTestA','h_QCDTestA',QCDMu,variable,binning,selection+CorrectLumiAndPU+DoubleMuNonEmulatedTrigger+Filters,Style_A,Label)
+    print "Test MC = "+str(h_QCDTestA.Integral())
+
     h_QCD_A.Add(h_qcd_A_WJets,-1)
     h_QCD_A.Add(h_qcd_A_DiBoson,-1)
     h_QCD_A.Add(h_qcd_A_ZJets,-1)
@@ -207,6 +214,10 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
     h_QCD_B.Add(h_qcd_B_TTBar,-1)
     print "--->Contribution of B = "+str(h_QCD_B.Integral())
 
+    h_QCDTestB=MakeHisto('h_QCDTestB','h_QCDTestB',qcd_QCDMu,variable,binning,selection+CorrectLumiAndPU+DoubleMuNonEmulatedTrigger+Filters,Style_nonA,Label)
+    print "Test MC = "+str(h_QCDTestB.Integral())
+
+
     #Region C, should be SS, with the isolation applied
     h_QCD_C=MakeHisto('h_QCD_C','Data',SingleMuData,variable,binning,qcdselection+Filters+Trigger,Style_nonA,Label)
     Data_C=h_QCD_C.Integral()
@@ -233,6 +244,9 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
     #h_QCD_C.Add(h_qcd_C_GJets,-1)
     h_QCD_C.Add(h_qcd_C_TTBar,-1)
     print "--->Contribution of C = "+str(h_QCD_C.Integral())
+
+    h_QCDTestC=MakeHisto('h_QCDTestC','h_QCDTestC',QCDMu,variable,binning,qcdselection+CorrectLumiAndPU+DoubleMuNonEmulatedTrigger+Filters,Style_nonA,Label)
+    print "Test MC = "+str(h_QCDTestC.Integral())
     
 
 
@@ -263,6 +277,9 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
     h_QCD_D.Add(h_qcd_D_TTBar,-1)
     print "--->Contribution of D = "+str(h_QCD_D.Integral())
 
+    h_QCDTestD=MakeHisto('h_QCDTestD','h_QCDTestD',qcd_QCDMu,variable,binning,qcdselection+CorrectLumiAndPU+DoubleMuNonEmulatedTrigger+Filters,Style_nonA,Label)
+    print "Test MC = "+str(h_QCDTestD.Integral())
+
     #Getting the total ratio and error:
 
     
@@ -286,16 +303,16 @@ def DrawHisto(JustIntegrate,lq_choice, selection, emuselection, qcdselection, us
 
     trees=[qcd_SingleMuData,qcd_WJetsJBin,qcd_DiBoson,qcd_ZJetsJBin,qcd_SingleTop,qcd_TTBarDBin]
     weights=[1,-1,-1,-1,-1,-1]
-    qcdselections=[binning,qcdselection+Filters+Trigger,qcdselection+CorrectLumiAndPU+DoubleMuNonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleMuNonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleMuNonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleMuNonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleMuNonEmulatedTrigger+Filters]
+    qcdselections=[qcdselection+Filters+Trigger,qcdselection+CorrectLumiAndPU+DoubleMuNonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleMuNonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleMuNonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleMuNonEmulatedTrigger+Filters,qcdselection+CorrectLumiAndPU+DoubleMuNonEmulatedTrigger+Filters]
 
     for i in range(len(trees)):
-        trees[i].Project('h','1.0',selections[i])
+        trees[i].Project('h','1.0',qcdselections[i])
         hdenom.Add(h,weights[i])
 
     hnum.Divide(hdenom)
 
-    I = htotal.GetBinContent(1)
-    E = htotal.GetBinError(1)
+    I = hnum.GetBinContent(1)
+    E = hnum.GetBinError(1)
 
     print str(I) +"+/-"+str(E)
     #Now the combined regions, will start with A 
@@ -515,6 +532,7 @@ def plot():
 
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, jetcountbinning, "PFJetCount", "PFJetCount", "PFJetCount", "PFJetCount" +xtag, znorm, ttscaler,filetag)
 
+    return
     DrawHisto(JustIntegrate,lq_choice, Selection, Selection_emu, Selection_qcd, use_emu, drawSub, ptbinning, "Pt_pfjet1","Pt_pfjet1", "Pt_pfjet1", "p_{T} (jet_{1}) (GeV) " +xtag,znorm, ttscaler,filetag)
 
    

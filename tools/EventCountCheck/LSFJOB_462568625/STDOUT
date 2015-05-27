@@ -1,0 +1,25 @@
+@(#)CERN job starter $Date: 2010/06/23 14:22:16 $
+Working directory is </pool/lsf/dnash/462568625> on <lxbrk58c02.cern.ch>
+
+**** Following environment variables are going to be unset.
+       CASCADE_PDFPATH
+/pool/lsf/dnash/462568625
+Error in <TXNetFile::Init>: file root://eoscms//eos/cms/store/group/phys_exotica/leptonsPlusJets/RootNtuple/eberry/RootNtuple-V00-03-11-Summer12MC_WNJetsToLNu_MG_20130215_231134/W2JetsToLNu_TuneZ2Star_8TeV-madgraph__Summer12_DR53X-PU_S10_START53_V7A-v1__AODSIM_429_1_RlW.root is truncated at 111411200 bytes: should be 409661584, trying to recover
+Info in <TXNetFile::Recover>: root://eoscms//eos/cms/store/group/phys_exotica/leptonsPlusJets/RootNtuple/eberry/RootNtuple-V00-03-11-Summer12MC_WNJetsToLNu_MG_20130215_231134/W2JetsToLNu_TuneZ2Star_8TeV-madgraph__Summer12_DR53X-PU_S10_START53_V7A-v1__AODSIM_429_1_RlW.root, recovered key TDirectoryFile:LJFilter at address 384
+Info in <TXNetFile::Recover>: root://eoscms//eos/cms/store/group/phys_exotica/leptonsPlusJets/RootNtuple/eberry/RootNtuple-V00-03-11-Summer12MC_WNJetsToLNu_MG_20130215_231134/W2JetsToLNu_TuneZ2Star_8TeV-madgraph__Summer12_DR53X-PU_S10_START53_V7A-v1__AODSIM_429_1_RlW.root, recovered key TDirectoryFile:rootTupleTree at address 618
+Warning in <TXNetFile::Init>: successfully recovered 2 keys
+Error in <TKey::ReadObjWithBuffer>: Unknown class 
+Info in <TXNetFile::GetStreamerInfoList>: cannot find the StreamerInfo record in file root://eoscms//eos/cms/store/group/phys_exotica/leptonsPlusJets/RootNtuple/eberry/RootNtuple-V00-03-11-Summer12MC_WNJetsToLNu_MG_20130215_231134/W2JetsToLNu_TuneZ2Star_8TeV-madgraph__Summer12_DR53X-PU_S10_START53_V7A-v1__AODSIM_429_1_RlW.root
+Error in <TXNetFile::CreateXClient>: open attempt failed on root://eoscms//eos/cms/store/group/phys_exotica/leptonsPlusJets/RootNtuple/eberry/RootNtuple-V00-03-11-Summer12MC_WNJetsToLNu_MG_20130215_231134/W2JetsToLNu_TuneZ2Star_8TeV-madgraph__Summer12_DR53X-PU_S10_START53_V7A-v1__AODSIM_429_1_RlW.root
+Error: illegal pointer to class object f 0x0 79  TempCounter.C:4:
+*** Interpreter error recovered ***
+
+Job finished at Fri Oct 25 04:11:40 CEST 2013 on node 
+ under linux version Scientific Linux CERN SLC release 5.9 (Boron)
+
+
+CERN statistics: This job used 1:00:02 NCU hours (3602 NCU seconds)
+
+CERN statistics: This job used 1:00:02 KSI2K hours (3602 KSI2K seconds)
+
+KSI2K = kilo-SpecInt2000 benchmark units = 1.00 NCU
