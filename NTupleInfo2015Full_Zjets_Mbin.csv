@@ -1,0 +1,10 @@
+SignalType,Xsections,N_orig,Group,CustomJson,EOSDirectory
+DYJetsToLL_M-100to200,226,101638,DYJetsToLL_Mbin,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-1_2015Aug18_163419/DYJetsToLL_M-100to200_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8
+DYJetsToLL_M-200to400,7.67,95488,DYJetsToLL_Mbin,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-1_2015Aug18_163419/DYJetsToLL_M-200to400_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8
+DYJetsToLL_M-400to500,0.423,97014,DYJetsToLL_Mbin,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-1_2015Aug18_163419/DYJetsToLL_M-400to500_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8
+DYJetsToLL_M-500to700,0.24,101029,DYJetsToLL_Mbin,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-1_2015Aug18_163419/DYJetsToLL_M-500to700_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8
+DYJetsToLL_M-700to800,0.035,96011,DYJetsToLL_Mbin,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-1_2015Aug18_163419/DYJetsToLL_M-700to800_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8
+DYJetsToLL_M-800to1000,0.03,89216,DYJetsToLL_Mbin,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-1_2015Aug18_163419/DYJetsToLL_M-800to1000_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8
+DYJetsToLL_M-1000to1500,0.016,90067,DYJetsToLL_Mbin,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-1_2015Aug18_163419/DYJetsToLL_M-1000to1500_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8
+DYJetsToLL_M-1500to2000,0.002,95217,DYJetsToLL_Mbin,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-1_2015Aug18_163419/DYJetsToLL_M-1500to2000_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8
+DYJetsToLL_M-2000to3000,0.00054,95200,DYJetsToLL_Mbin,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-1_2015Aug18_163419/DYJetsToLL_M-2000to3000_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8

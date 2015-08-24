@@ -1,0 +1,4 @@
+SignalType,Xsections,N_orig,Group,CustomJson,EOSDirectory
+ZZ_,10.32,996168,DiBoson,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-1_2015Aug18_094407/ZZ_TuneCUETP8M1_13TeV-pythia8/
+WZ_,22.82,991232,DiBoson,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-1_2015Aug18_094407/WZ_TuneCUETP8M1_13TeV-pythia8/
+WW_,63.21,994416,DiBoson,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-1_2015Aug18_094407/WW_TuneCUETP8M1_13TeV-pythia8/

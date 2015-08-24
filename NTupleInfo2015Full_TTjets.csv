@@ -1,0 +1,5 @@
+SignalType,Xsections,N_orig,Group,CustomJson,EOSDirectory
+TTJets_DiLept,87.33,31863314,TTJets,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/scooper/v1-0-0_2015Aug13_160616/TTJets_DiLept_TuneCUETP8M1_13TeV-madgraphMLM-pythia8
+TTJets_SingleLeptFromT_,182.16,11476794,TTJets,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/scooper/v1-0-0_2015Aug13_160616/TTJets_SingleLeptFromT_TuneCUETP8M1_13TeV-madgraphMLM-pythia8
+TTJets_SingleLeptFromTbar_,182.16,13115134,TTJets,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/scooper/v1-0-0_2015Aug13_160616/TTJets_SingleLeptFromTbar_TuneCUETP8M1_13TeV-madgraphMLM-pythia8
+TTJets_TuneCUETP8M1,831.76,11339232,TTJetsInc,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/scooper/v1-0-0_2015Aug13_160616/TTJets_TuneCUETP8M1_13TeV-madgraphMLM-pythia8

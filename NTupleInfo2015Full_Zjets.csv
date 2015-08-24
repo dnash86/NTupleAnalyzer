@@ -1,0 +1,7 @@
+SignalType,Xsections,N_orig,Group,CustomJson,EOSDirectory
+DYJetsToLL_M-5to50_,7160,9332206,ZJets,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/scooper/v1-0-0_2015Aug13_153338/DYJetsToLL_M-5to50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8
+DYJetsToLL_M-50_TuneCUETP8M1,6025.2,9052671,ZJets,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/scooper/v1-0-0_2015Aug13_153338/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8
+DYJetsToLL_M-50_HT-100to200_,139.4,2856599,ZJetsHT,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/scooper/v1-0-0_2015Aug13_153338/DYJetsToLL_M-50_HT-100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8
+DYJetsToLL_M-50_HT-200to400_,42.75,955972,ZJetsHT,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/scooper/v1-0-0_2015Aug13_153338/DYJetsToLL_M-50_HT-200to400_TuneCUETP8M1_13TeV-madgraphMLM-pythia8
+DYJetsToLL_M-50_HT-400to600_,5.497,1165949,ZJetsHT,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/scooper/v1-0-0_2015Aug13_153338/DYJetsToLL_M-50_HT-400to600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8
+DYJetsToLL_M-50_HT-600toInf_,2.21,938566,ZJetsHT,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/scooper/v1-0-0_2015Aug13_153338/DYJetsToLL_M-50_HT-600toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8

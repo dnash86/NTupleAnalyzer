@@ -1,0 +1,10 @@
+SignalType,Xsections,N_orig,Group,CustomJson,EOSDirectory
+WJetsToLNu_TuneCUETP8M1,63128.05343,24151270,WJetsAmcAtNLO,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-0_2015Aug14_130623/WJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8
+WJetsToLNu_HT-100To200,1347,10092254,WJetsMGMLM,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-0_2015Aug14_130623/WJetsToLNu_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/
+WJetsToLNu_HT-200To400,360,5231856,WJetsMGMLM,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-0_2015Aug14_130623/WJetsToLNu_HT-200To400_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/
+WJetsToLNu_HT-400To600,48.9,1901705,WJetsMGMLM,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-0_2015Aug14_130623/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/
+WJetsToLNu_HT-600To800,12.8,3934583,WJetsMGMLM,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-0_2015Aug14_130623/WJetsToLNu_HT-600To800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/
+WJetsToLNu_HT-800To1200,5.261,1574633,WJetsMGMLM,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-0_2015Aug14_130623/WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/
+WJetsToLNu_HT-1200To2500,1.334,255637,WJetsMGMLM,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-0_2015Aug14_130623/WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/
+WJetsToLNu_HT-2500ToInf,0.03089,253036,WJetsMGMLM,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-0_2015Aug14_130623/WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/
+#WJetsToLNu_HT-600ToInf,18.77,1036108,WJetsMGMLM,0,/store/group/phys_exotica/leptonsPlusJets/RootNtuple/RunII/dmorse/v2-1-0_2015Aug14_130623/WJetsToLNu_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/
