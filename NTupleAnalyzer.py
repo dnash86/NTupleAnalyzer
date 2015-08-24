@@ -34,7 +34,7 @@ def getArguments():
 	parser.add_option("-j", "--json", dest="json", help="json file for certified run:lumis", metavar="JSON")
 	parser.add_option("-d", "--dir", dest="dir", help="output directory", metavar="DIR")
 	parser.add_option("-p", "--pdf", dest="pdf", help="option to produce pdf uncertainties", metavar="PDF")
-
+	parser.add_option("-m", "--lepton_mode", dest="lmode", help="Specify the lepton mode: ee,mumu, or emu.  Default is mumu", metavar="LEPTONMODE")
 
 	(options, args) = parser.parse_args()
 
@@ -53,8 +53,9 @@ if '/castor/cern.ch' in name:
 # These are switches based on the tag name. 
 # First is whether to change out a muon with an electron ( for e-mu ttbar samples)
 emuswitch=False
-if "EMuSwitch" in options.dir:
+if ("EMuSwitch" in options.dir) or ("emu" in options.lmode):
 	emuswitch=True
+
 # Turn of the isolation condition for QCD studies
 nonisoswitch=False
 if "NonIso" in options.dir:
@@ -92,23 +93,35 @@ indicator = ((name.split('_'))[-1]).replace('.root','')
 
 junkfile1 = str(randint(100000000,1000000000))+indicator+'junk.root'
 
-# At least one 100 GeV PFJet
+# At least one 40 GeV PFJet
 fj1 = TFile.Open(junkfile1,'RECREATE')
-t1 = to.CopyTree('PFJetPt[]>110')
+t1 = to.CopyTree('PFJetPt[]>40')
 # t1 = to.CopyTree('(1)')
 Nj1 = t1.GetEntries()
 
 junkfile2 = str(randint(100000000,1000000000))+indicator+'junk.root'
 
-# At least one 40 GeV muon
-fj2 = TFile.Open(junkfile2,'RECREATE')
-t = t1.CopyTree('MuonPt[]>42')
-N = t.GetEntries()
+if "ee" in options.lmode:
+	# At least one 40 GeV electron
+	fj2 = TFile.Open(junkfile2,'RECREATE')
+	t = t1.CopyTree('ElectronPt[]>40')
+	N = t.GetEntries()
+elif "emu" in options.lmode:
+	# At least one 40 GeV muon AND one 40 GeV electron
+	fj2 = TFile.Open(junkfile2,'RECREATE')
+	t = t1.CopyTree('ElectronPt[]>40')
+	t = t1.CopyTree('MuonPt[]>40')
+	N = t.GetEntries()
+else:
+	# At least one 40 GeV muon
+	fj2 = TFile.Open(junkfile2,'RECREATE')
+	t = t1.CopyTree('MuonPt[]>40')
+	N = t.GetEntries()
 
-# PRint the reduction status
+# Print the reduction status
 print 'Original events:          ',No
-print 'After demand 1 pT110 jet: ',Nj1
-print 'After demand 1 pt42 muon: ',N
+print 'After demand 1 pT40 jet: ',Nj1
+print 'After demand 1 pt40 lepton: ',N
 
 ##########################################################################################
 #################      PREPARE THE VARIABLES FOR THE OUTPUT TREE   #######################
@@ -243,8 +256,14 @@ def FullKinematicCalculation(T,variation):
 	[jets,jetinds,met,failthreshold,neutralhadronEF,neutralemEF] = LooseIDJets(T,met,variation,T.isData)
 	# jets = GeomFilterCollection(jets,muons_forjetsep,0.5)
 
-	jets = GeomFilterCollection(jets,muons,0.5)
-	jets = GeomFilterCollection(jets,electrons,0.5)
+	if "ee" in options.lmode:
+		jets = GeomFilterCollection(jets,electrons,0.5)
+	elif "emu" in options.lmode:
+		jets = GeomFilterCollection(jets,electrons,0.5)
+		jets = GeomFilterCollection(jets,muons,0.5)
+	else:
+		jets = GeomFilterCollection(jets,muons,0.5)
+
 
 	# jets = GeomFilterCollection(jets,taus_forjetsep,0.5)
 	# Empty lorenz vector for bookkeeping
@@ -575,12 +594,26 @@ for n in range(N):
 	# that the systematic varied quantity will, and that will throw off systematics calculations later.
 	# Make sure your skim is looser than any selection you will need afterward!
 
-	if (Branches['Pt_muon1'][0] < 42): continue
-	if nonisoswitch != True:
-		if (Branches['Pt_muon2'][0] < 42) and (Branches['Pt_miss'][0] < 35): continue
-	if (Branches['Pt_jet1'][0] < 110): continue
-	if (Branches['Pt_jet2'][0] < 40): continue
-	if (Branches['St_uujj'][0] < 250) and (Branches['St_uvjj'][0] < 250): continue
+	if "ee" in options.lmode:
+		if (Branches['Pt_ele1'][0] < 40): continue
+		if (Branches['Pt_ele2'][0] < 40): continue
+	        #if (Branches['Pt_jet1'][0] < 110): continue
+		if (Branches['M_ee'][0] < 50): continue
+	        #if (Branches['St_eej'][0] < 250): continue
+	elif "emu" in options.lmode:
+		## In emu mode, the muon vector contains the leading muon and leading electron
+		if (Branches['Pt_muon1'][0] < 40): continue
+		if (Branches['Pt_muon2'][0] < 40): continue
+	        #if (Branches['Pt_jet1'][0] < 110): continue
+		if (Branches['M_emu'][0] < 50): continue
+	        #if (Branches['St_mumujj'][0] < 250): continue
+	else:
+		if (Branches['Pt_muon1'][0] < 40): continue
+		if (Branches['Pt_muon2'][0] < 40): continue
+	        #if (Branches['Pt_jet1'][0] < 110): continue
+		if (Branches['M_uu'][0] < 50): continue
+	        #if (Branches['St_uujj'][0] < 250): continue
+
 	# Fill output tree with event
 	tout.Fill()
 

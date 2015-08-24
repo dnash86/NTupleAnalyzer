@@ -20,6 +20,7 @@ dopdf = '0'
 nsplit = 25
 bq = '1nd'
 override_dir = ''
+mode=''
 
 helpmessage = 'OPTIONS SUMMARY: \n -i  CSVFILE.csv \n -py ANALYZER.py \n -t  TAGNAME (optional) [default "default"] ' 
 helpmessage += '\n -j  JSONFILE (needed, but ignored for MC) \n -p  0 or 1 (optional boolean to store PDF uncertainties in trees) [default 0] \n -q  Batch Queue (optional) [default "1nd"] '
@@ -44,6 +45,8 @@ for x in range(len(a)):
 		bq = (a[x+1])
 	if a[x] == '-d':
 		override_dir = (a[x+1])
+	if a[x] == '-m':
+		mode = (a[x+1])
 	if a[x] == '--help':
 		print helpmessage
 		sys.exit()
@@ -294,7 +297,7 @@ for x in range(len(SignalType)):
 	print 'Preparing '+ SignalType[x],':', len(fcont),'files.'
 
 	for f in fcont:
-		jobs.append('python '+pyfile.replace('\n','')+' -f '+f.replace('\n','').replace('//','/')+' -s '+sigma+' -n '+Norig+' -j '+thisjson + ' -l 1.0 -p '+dopdf+' -d '+random.choice(output_subfolders).replace('\n',''))
+		jobs.append('python '+pyfile.replace('\n','')+' -f '+f.replace('\n','').replace('//','/')+' -s '+sigma+' -n '+Norig+' -j '+thisjson + ' -l 1.0 -p '+dopdf+' -d '+random.choice(output_subfolders).replace('\n','')+' m '+mode.replace('\n',''))
 
 # Some NTuple sets have larger files then others. Avoid grouping of large files by shuffling. 
 random.shuffle(jobs)
