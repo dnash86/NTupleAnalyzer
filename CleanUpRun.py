@@ -21,8 +21,8 @@ def getArguments():
 
     # Command line flags
     parser.add_argument('run_folder')
-    parser.add_argument('-o', '--clean_output', action='store_true', dest='doOutput', help='Preset cleaning of output logs')
-    parser.add_argument('-r', '--clean_root', action='store_true', dest='doRoot', help='Preset cleaning of output root files/folders')
+    parser.add_argument('-o', '--clean_output', action='store_true', dest='doOutput', default=False, help='Preset cleaning of output logs')
+    parser.add_argument('-r', '--clean_root', action='store_true', dest='doRoot', default=False, help='Preset cleaning of output root files/folders')
 
     args_ = parser.parse_args()
     return args_

@@ -297,7 +297,7 @@ for x in range(len(SignalType)):
 	print 'Preparing '+ SignalType[x],':', len(fcont),'files.'
 
 	for f in fcont:
-		jobs.append('python '+pyfile.replace('\n','')+' -f '+f.replace('\n','').replace('//','/')+' -s '+sigma+' -n '+Norig+' -j '+thisjson + ' -l 1.0 -p '+dopdf+' -d '+random.choice(output_subfolders).replace('\n','')+' m '+mode.replace('\n',''))
+		jobs.append('python '+pyfile.replace('\n','')+' -f '+f.replace('\n','').replace('//','/')+' -s '+sigma+' -n '+Norig+' -j '+thisjson + ' -l 1.0 -p '+dopdf+' -d '+random.choice(output_subfolders).replace('\n','')+' -m '+mode.replace('\n',''))
 
 # Some NTuple sets have larger files then others. Avoid grouping of large files by shuffling. 
 random.shuffle(jobs)
